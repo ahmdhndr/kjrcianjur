@@ -13,7 +13,9 @@ export default function Home() {
         heroTitle="We Are The Future"
         heroSubTitle="Selamat datang di website KJR Cianjur"
       />
-      <Main></Main>
+      <Main>
+        <h1>Hallo, Tes koneksi github</h1>
+      </Main>
     </>
   );
 }
