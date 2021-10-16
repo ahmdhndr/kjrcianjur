@@ -1,0 +1,64 @@
+{
+  "articles": [
+    {
+      "id": "1",
+      "title": "Senam HipHeart Seri 2",
+      "slug": "senam-hipheart-seri-2",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis atque maxime saepe? Earum hic accusantium quos culpa veritatis nemo? Repellendus obcaecati distinctio ratione reprehenderit quas repudiandae deserunt harum? Repellendus dolorem, provident ratione laborum, quam nobis architecto sit hic ullam ipsam deleniti illo beatae sint. Pariatur assumenda aspernatur magnam corrupti!",
+      "imgCover": "/images/foto-1.jpg",
+      "createdAt": "2021-03-29T13:26:42+07:00",
+      "updatedAt": "2021-03-29T13:26:42+07:00"
+    },
+    {
+      "id": "2",
+      "title": "Senam HipHeart Seri 1",
+      "slug": "senam-hipheart-seri-1",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis atque maxime saepe? Earum hic accusantium quos culpa veritatis nemo? Repellendus obcaecati distinctio ratione reprehenderit quas repudiandae deserunt harum? Repellendus dolorem, provident ratione laborum, quam nobis architecto sit hic ullam ipsam deleniti illo beatae sint. Pariatur assumenda aspernatur magnam corrupti!",
+      "imgCover": "/images/foto-2.jpg",
+      "createdAt": "2021-04-29T13:26:42+07:00",
+      "updatedAt": "2021-04-29T13:26:42+07:00"
+    },
+    {
+      "id": "3",
+      "title": "KJR in action",
+      "slug": "kjr-in-action",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis atque maxime saepe? Earum hic accusantium quos culpa veritatis nemo? Repellendus obcaecati distinctio ratione reprehenderit quas repudiandae deserunt harum? Repellendus dolorem, provident ratione laborum, quam nobis architecto sit hic ullam ipsam deleniti illo beatae sint. Pariatur assumenda aspernatur magnam corrupti!",
+      "imgCover": "/images/foto-3.jpg",
+      "createdAt": "2021-05-29T13:26:42+07:00",
+      "updatedAt": "2021-05-29T13:26:42+07:00"
+    },
+    {
+      "id": "4",
+      "title": "KJR in action",
+      "slug": "kjr-in-action",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis atque maxime saepe? Earum hic accusantium quos culpa veritatis nemo? Repellendus obcaecati distinctio ratione reprehenderit quas repudiandae deserunt harum? Repellendus dolorem, provident ratione laborum, quam nobis architecto sit hic ullam ipsam deleniti illo beatae sint. Pariatur assumenda aspernatur magnam corrupti!",
+      "imgCover": "/images/foto-4.jpg",
+      "createdAt": "2021-12-29T13:26:42+07:00",
+      "updatedAt": "2021-12-29T13:26:42+07:00"
+    },
+    {
+      "id": "5",
+      "title": "KJR in action",
+      "slug": "kjr-in-action",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis atque maxime saepe? Earum hic accusantium quos culpa veritatis nemo? Repellendus obcaecati distinctio ratione reprehenderit quas repudiandae deserunt harum? Repellendus dolorem, provident ratione laborum, quam nobis architecto sit hic ullam ipsam deleniti illo beatae sint. Pariatur assumenda aspernatur magnam corrupti!",
+      "imgCover": "/images/foto-5.jpg",
+      "createdAt": "2021-08-29T13:26:42+07:00",
+      "updatedAt": "2021-08-29T13:26:42+07:00"
+    },
+    {
+      "id": "6",
+      "title": "KJR in action",
+      "slug": "kjr-in-action",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni corporis atque maxime saepe? Earum hic accusantium quos culpa veritatis nemo? Repellendus obcaecati distinctio ratione reprehenderit quas repudiandae deserunt harum? Repellendus dolorem, provident ratione laborum, quam nobis architecto sit hic ullam ipsam deleniti illo beatae sint. Pariatur assumenda aspernatur magnam corrupti!",
+      "imgCover": "/images/foto-6.jpg",
+      "createdAt": "2021-10-29T13:26:42+07:00",
+      "updatedAt": "2021-10-29T13:26:42+07:00"
+    }
+  ]
+}

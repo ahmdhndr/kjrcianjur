@@ -1,6 +1,6 @@
-import Gap from '../components/Gap';
-import Main from '../components/Main';
-import Seo from '../components/Seo';
+import Gap from '@/components/Gap';
+import Main from '@/components/Main';
+import Seo from '@/components/Seo';
 
 export default function ContactPage() {
   return (

@@ -1,5 +1,5 @@
-import Main from '../../components/Main';
-import Seo from '../../components/Seo';
+import Main from '@/components/Main';
+import Seo from '@/components/Seo';
 
 export default function ArticlesPage() {
   return (

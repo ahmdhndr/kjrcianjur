@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
   return (
     <footer className="bg-primary-200 text-white">
@@ -55,13 +57,11 @@ export default function Footer() {
       <div className="border-t border-primary-100 px-4 py-3 text-center">
         <div>
           KJR Cianjur © 2021 created by{' '}
-          <a
-            className="underline"
-            href="https://github.com/ahmdhndr"
-            target="_blank"
-          >
-            ahmdhndr
-          </a>
+          <Link href="https://github.com/eruDev0">
+            <a className="underline" target="_blank">
+              erudev
+            </a>
+          </Link>
         </div>
       </div>
     </footer>

@@ -20,8 +20,12 @@ module.exports = {
       maxHeight: {
         hero: '510px',
       },
+      width: {
+        'small-screen': '355px',
+      },
       height: {
         hero: '80vh',
+        'small-screen': '355px',
       },
       borderRadius: {
         '40px': '40px',

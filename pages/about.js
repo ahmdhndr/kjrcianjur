@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import Hero from '../components/Hero';
-import Main from '../components/Main';
-import Seo from '../components/Seo';
+import Hero from '@/components/Hero';
+import Main from '@/components/Main';
+import Seo from '@/components/Seo';
 
 export default function AboutPage() {
   return (

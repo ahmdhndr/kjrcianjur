@@ -26,9 +26,9 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // const hamburgerClickHandler = () => {
-  //   setIsOpen(!isOpen);
-  // };
+  const hamburgerClickHandler = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -45,7 +45,7 @@ export default function Navbar() {
             <h2 className="ml-2 font-bold text-base">KJR Cianjur</h2>
           </a>
         </Link>
-        <button className="block md:hidden" onClick={() => setIsOpen(true)}>
+        <button className="block md:hidden" onClick={hamburgerClickHandler}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-8 w-8"
@@ -78,7 +78,7 @@ export default function Navbar() {
               />
             </a>
           </Link>
-          <button className="close" onClick={() => setIsOpen(false)}>
+          <button className="close" onClick={hamburgerClickHandler}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-7 w-7"
@@ -100,7 +100,7 @@ export default function Navbar() {
             <Link href={navLink.path} key={i}>
               <a
                 className={`${
-                  navLink.path == pathUrl ? 'active' : ''
+                  navLink.path === pathUrl ? 'active' : ''
                 } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded`}
                 onClick={() => setIsOpen(false)}
               >
