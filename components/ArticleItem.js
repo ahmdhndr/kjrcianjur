@@ -36,7 +36,7 @@ export default function ArticleItem({ article }) {
         <div className="text-gray-500 font-light my-4 h-14 overflow-y-auto custom-scroll">
           {article.description}
         </div>
-        <Link href="/api/articles/[slug]" as={`/api/articles/${article.slug}`}>
+        <Link href={`/articles/${article.slug}`}>
           <a className="btn btn-md block btn-primary text-white justify-self-end hover:bg-primary-200 transition duration-100 ease-in">
             <button>Baca selengkapnya</button>
           </a>

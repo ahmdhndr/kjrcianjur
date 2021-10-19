@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import ArticleItem from '@/components/ArticleItem';
 import Hero from '@/components/Hero';
 import Main from '@/components/Main';
@@ -7,7 +9,6 @@ import Seo from '@/components/Seo';
 import { API_URL } from '@/config/index';
 
 export default function Home({ articles }) {
-  console.log(articles);
   return (
     <>
       <Seo title="KJR Cianjur | Home" />
@@ -32,6 +33,11 @@ export default function Home({ articles }) {
             ))}
           </div>
         </section>
+        <Link href="/articles">
+          <a className="mt-5 btn btn-md inline-block btn-primary text-white hover:bg-primary-200 transition duration-100 ease-in">
+            <button>Semua Artikel</button>
+          </a>
+        </Link>
       </Main>
     </>
   );
@@ -43,8 +49,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      articles,
-      revalidate: 1,
+      articles: articles.slice(0, 3),
     },
+    revalidate: 1,
   };
 }
