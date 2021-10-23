@@ -11,7 +11,7 @@ import { API_URL } from '@/config/index';
 export default function Home({ articles }) {
   return (
     <>
-      <Seo title="KJR Cianjur | Home" />
+      <Seo title="KJR Cianjur | Beranda" />
       <Hero
         imgSrc="/images/bg-image.jpg"
         imgAlt="Gambar: Anggota KJR Cianjur"
@@ -44,12 +44,12 @@ export default function Home({ articles }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/api/articles`);
+  const res = await fetch(`${API_URL}/articles?_sort=created_at:DESC&_limit=3`);
   const articles = await res.json();
 
   return {
     props: {
-      articles: articles.slice(0, 3),
+      articles,
     },
     revalidate: 1,
   };

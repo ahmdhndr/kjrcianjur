@@ -6,16 +6,16 @@ export default function ContactPage() {
   return (
     <>
       <Seo title="KJR Cianjur | Kontak KJR" />
-      <Main cn="mt-16">
+      <Main cn="mt-12">
         <div className="text-center mb-5 text-secondary-200">
-          <h2 className="my-2 font-light tracking-wide">
+          <h2 className="text-base my-2 font-light tracking-wide">
             Kita semua tahu, tidak ada yang sempurna.
             <br />
             Jadi, jika ada pertanyaan/kritik/saran. Jangan sungkan untuk
             menghubungi kita, ya!
           </h2>
         </div>
-        <div className="card bg-white p-5 overflow-hidden rounded-xl grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="card bg-white p-5 overflow-hidden rounded-md grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="card rounded-xl p-5 bg-primary-200 text-white col-span-1">
             <h2 className="font-bold text-lg tracking-wide">
               Informasi Kontak

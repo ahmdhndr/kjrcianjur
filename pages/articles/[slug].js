@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import marked from 'marked';
 import {
   FaWhatsapp,
   FaFacebook,
@@ -34,20 +35,16 @@ export default function ArticlePage({ article }) {
         title={`KJR Cianjur | ${article.title}`}
         description={`${article.description}`}
       />
-      <Hero
-        imgSrc={`${
-          article.imgCover ? article.imgCover : '/images/default.jpg'
-        }`}
-        heroTitle=""
-        heroSubTitle=""
-      />
-      <Main>
-        <div className="text-secondary-100">
-          <div className="card rounded-xl overflow-hidden p-5 bg-white shadow-sm">
+      <Main cn="mt-14 md:pl-0 mb-5">
+        <div className="text-secondary-200">
+          <div className="card rounded-sm overflow-hidden">
+            {/* <Link href="/">
+              <a className="block mb-5">{'<'} Kembali</a>
+            </Link> */}
             <div className="sm:block md:grid md:grid-cols-4 md:items-center md:justify-between">
-              <h2 className="text-3xl font-extrabold capitalize md:col-span-3">
+              <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
                 {article.title}
-              </h2>
+              </h1>
               <div className="md:justify-self-end flex items-center md:col-span-1">
                 <Link href={`/articles/edit/${article.id}`}>
                   <a className="block text-primary-200 rounded-md items-end">
@@ -63,26 +60,32 @@ export default function ArticlePage({ article }) {
                 </button>
               </div>
             </div>
-            <div className="sm:grid md:flex justify-between text-sm text-gray-400 items-center my-2">
+            <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
               <div>
-                {article.createdAt === article.updatedAt ? (
-                  <p className="capitalize">{`Dibuat pada: ${moment(
-                    article.createdAt
-                  ).format('lll')}`}</p>
+                {article.user ? (
+                  <p>Ditulis oleh: {article.user.username}</p>
                 ) : (
-                  <>
-                    <p className="capitalize">{`Dibuat pada: ${moment(
-                      article.createdAt
-                    ).format('lll')}`}</p>
-                    <p className="capitalize">{`Terakhir diperbarui: ${moment(
-                      article.updatedAt
-                    ).format('lll')}`}</p>
-                  </>
+                  <p>Ditulis oleh: Admin</p>
                 )}
+                <p>{`Terakhir diperbarui: ${moment(article.updated_at)
+                  .locale('id')
+                  .format('MMMM Do YYYY, HH:MM')}`}</p>
               </div>
             </div>
+            {/* Hero Section */}
+            <Hero
+              imgSrc={`${
+                article.image ? article.image.url : '/images/default.jpg'
+              }`}
+              heroTitle=""
+              heroSubTitle=""
+              addCn="mt-0 mb-2"
+            />
             {/* Description Section */}
-            <section className="article-content">{article.content}</section>
+            <section
+              className="article-content"
+              dangerouslySetInnerHTML={{ __html: marked(article.content) }}
+            ></section>
 
             {/* Share Artikel */}
             <div className="share-article mt-10">
@@ -118,7 +121,7 @@ export default function ArticlePage({ article }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/articles`);
+  const res = await fetch(`${API_URL}/articles`);
   const articles = await res.json();
 
   const paths = articles.map((article) => ({
@@ -132,7 +135,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const res = await fetch(`${API_URL}/api/articles/${slug}`);
+  const res = await fetch(`${API_URL}/articles?slug=${slug}`);
   const articles = await res.json();
 
   return {

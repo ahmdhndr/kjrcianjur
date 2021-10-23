@@ -15,8 +15,8 @@ export default function AboutPage() {
         heroSubTitle=""
         objPos="object-bottom"
       />
-      <Main>
-        <div className="card rounded-xl overflow-hidden p-5 bg-white shadow-sm">
+      <Main cn="mb-5">
+        <div className="card overflow-hidden">
           <p className="text-sm mb-2">
             Sumber:{' '}
             <span>
