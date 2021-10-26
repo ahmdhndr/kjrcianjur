@@ -4,9 +4,10 @@ import Search from '@/components/Search';
 import Seo from '@/components/Seo';
 
 // config
-import { API_URL } from '@/config/index';
+import { API_URL, PER_PAGE } from '@/config/index';
+import Pagination from '@/components/Pagination';
 
-export default function Articles({ articles }) {
+export default function Articles({ articles, page, total }) {
   return (
     <>
       <Seo title="KJR Cianjur | Semua Artikel" />
@@ -19,24 +20,36 @@ export default function Articles({ articles }) {
             </div>
             <Search />
           </div>
-          {articles.length === 0 && <h3>Belum ada artikel</h3>}
+          {articles.length === 0 && (
+            <h4>Tidak ada artikel untuk ditampilkan</h4>
+          )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {articles.map((article) => (
               <ArticleItem key={article.id} article={article} />
             ))}
           </div>
         </section>
+        <Pagination page={page} total={total} />
       </Main>
     </>
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/articles?_sort=created_at:DESC`);
-  const articles = await res.json();
+export async function getServerSideProps({ query: { page = 1 } }) {
+  // Calculate start page
+  const start = +page === 1 ? 0 : (+page - 1) * PER_PAGE;
+
+  // Fetch total/count
+  const totalRes = await fetch(`${API_URL}/articles/count`);
+  const total = await totalRes.json();
+
+  // Fetch articles
+  const articleRes = await fetch(
+    `${API_URL}/articles?_sort=created_at:DESC&_limit=${PER_PAGE}&_start=${start}`
+  );
+  const articles = await articleRes.json();
 
   return {
-    props: { articles },
-    revalidate: 1,
+    props: { articles, page: +page, total },
   };
 }

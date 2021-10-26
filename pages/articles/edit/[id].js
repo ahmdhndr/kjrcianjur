@@ -12,15 +12,18 @@ import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { slugify } from 'utils/slugify';
 
-export default function AddArticlePage() {
+export default function EditArticlePage({ article }) {
   const router = useRouter();
+
   const [values, setValues] = useState({
-    title: '',
-    description: '',
-    content: '',
+    title: article.title,
+    description: article.description,
+    content: article.content,
   });
-  // const [imagePreview, setImagePreview] = useState('/images/img-default.png');
-  // const [showModal, setShowModal] = useState(false);
+  const [imagePreview, setImagePreview] = useState(
+    article.image ? article.image.formats.large.url : null
+  );
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (e) => {
     let valid = true;
@@ -33,8 +36,8 @@ export default function AddArticlePage() {
     }
 
     if (valid) {
-      const res = await fetch(`${API_URL}/articles`, {
-        method: 'POST',
+      const res = await fetch(`${API_URL}/articles/${article.id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -44,11 +47,11 @@ export default function AddArticlePage() {
       if (!res.ok) {
         toast.error('Terjadi kesalahan');
       } else {
-        await res.json();
-        toast.success('Artikel berhasil ditambahkan, mengalihkan...');
+        const article = await res.json();
+        toast.success('Artikel berhasil diupdate');
         setTimeout(() => {
-          router.push('/articles');
-        }, 2000);
+          router.push(`/articles/${article.slug}`);
+        }, 1000);
       }
     }
   };
@@ -58,16 +61,16 @@ export default function AddArticlePage() {
     setValues({ ...values, [name]: value });
   };
 
-  // const imageUploaded = async (e) => {
-  //   const res = await fetch(`${API_URL}/articles/${article.id}`);
-  //   const data = await res.json();
-  //   setImagePreview(data.image.formats.large.url);
-  //   setShowModal(false);
-  // };
+  const imageUploaded = async (e) => {
+    const res = await fetch(`${API_URL}/articles/${article.id}`);
+    const data = await res.json();
+    setImagePreview(data.image.formats.large.url);
+    setShowModal(false);
+  };
 
   return (
     <>
-      <Seo title="KJR Cianjur | Tambah Artikel" />
+      <Seo title="KJR Cianjur | Edit Artikel" />
       <Main cn="mt-14 md:pl-0">
         <ToastContainer
           position="top-center"
@@ -80,19 +83,23 @@ export default function AddArticlePage() {
           draggable
           pauseOnHover={false}
         />
-        <h2 className="text-3xl font-bold mb-5">Tambah Artikel</h2>
-        {/* Imagemage section */}
-        {/* <div className="relative">
-          {imagePreview && (
+        <h2 className="text-3xl font-bold mb-5">Edit Artikel</h2>
+        {/* Image section */}
+        <div className="relative">
+          {imagePreview ? (
             <div className="image-placeholder w-full h-full md:h-96 bg-white relative overflow-hidden rounded">
               <img
                 src={imagePreview}
                 alt="Thumbnail"
-                className="w-60 h-60 relative md:top-16 left-1/2 transform -translate-x-1/2 object-cover object-center"
+                className="w-full relative top-1/2 left-1/2 transform md:-translate-y-1/2 -translate-x-1/2 object-cover object-center"
               />
             </div>
+          ) : (
+            <div>
+              <p>Belum ada gambar</p>
+            </div>
           )}
-          <div className="absolute bottom-2 left-2">
+          <div className="mt-3">
             <button
               onClick={() => setShowModal(true)}
               className="bg-primary-200 text-white p-2 rounded-md"
@@ -100,7 +107,7 @@ export default function AddArticlePage() {
               <FaImage className="inline-block" /> Update Cover
             </button>
           </div>
-        </div> */}
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="max-w-3xl mx-auto">
             <div className="rounded-md bg-white mt-5 p-5">
@@ -165,16 +172,25 @@ export default function AddArticlePage() {
                   type="submit"
                   className="block p-2 w-full md:w-auto bg-primary-200 rounded text-white"
                 >
-                  Tambah Artikel
+                  Update Artikel
                 </button>
               </div>
             </div>
           </div>
         </form>
       </Main>
-      {/* <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <ImageUpload imageUploaded={imageUploaded} />
-      </Modal> */}
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <ImageUpload articleId={article.id} imageUploaded={imageUploaded} />
+      </Modal>
     </>
   );
+}
+
+export async function getServerSideProps({ params: { id } }) {
+  const res = await fetch(`${API_URL}/articles/${id}`);
+  const article = await res.json();
+
+  return {
+    props: { article },
+  };
 }

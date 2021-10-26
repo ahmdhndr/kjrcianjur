@@ -10,24 +10,41 @@ import {
 } from 'react-icons/fa';
 
 import moment from 'moment';
+import 'moment/locale/id';
 import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   TelegramShareButton,
 } from 'react-share';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Hero from '@/components/Hero';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
-import { API_URL } from '@/config/index';
+import { API_URL, BASE_URL } from '@/config/index';
+import { useRouter } from 'next/router';
 
 export default function ArticlePage({ article }) {
-  const deleteArticle = (e) => {
-    console.log('delete');
+  const router = useRouter();
+  const deleteArticle = async (e) => {
+    if (confirm('Are you sure?')) {
+      const res = await fetch(`${API_URL}/articles/${article.id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message);
+      } else {
+        toast.success('Artikel berhasil dihapus');
+        setTimeout(() => router.push('/articles'), 2000);
+      }
+    }
   };
 
-  const shareUrl = `${API_URL}/articles/${article.slug}`;
+  const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
   return (
     <>
@@ -36,6 +53,17 @@ export default function ArticlePage({ article }) {
         description={`${article.description}`}
       />
       <Main cn="mt-14 md:pl-0 mb-5">
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
         <div className="text-secondary-200">
           <div className="card rounded-sm overflow-hidden">
             {/* <Link href="/">
@@ -69,7 +97,7 @@ export default function ArticlePage({ article }) {
                 )}
                 <p>{`Terakhir diperbarui: ${moment(article.updated_at)
                   .locale('id')
-                  .format('MMMM Do YYYY, HH:MM')}`}</p>
+                  .format('llll')}`}</p>
               </div>
             </div>
             {/* Hero Section */}

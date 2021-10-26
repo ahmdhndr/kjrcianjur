@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 export default function Search() {
   const [term, setTerm] = useState('');
@@ -12,11 +12,11 @@ export default function Search() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="bg-white rounded-md">
+    <div className="bg-white p-1 md:p-2 rounded-md">
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
-          className="p-3 rounded-md focus:ring-primary-200"
+          className="px-1"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
           placeholder="Cari Artikel"

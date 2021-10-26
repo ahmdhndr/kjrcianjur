@@ -130,6 +130,30 @@ h6 {
   padding: 0;
 }
 
+/* Modal */
+.modal {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+.modal .modal-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal .modal-body {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
 .card.card-wrapper {
   padding: 0;
 }

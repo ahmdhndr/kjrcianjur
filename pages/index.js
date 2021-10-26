@@ -26,7 +26,9 @@ export default function Home({ articles }) {
               <div className="bg-gray-300 h-1 w-1/3"></div>
             </div>
           </div>
-          {articles.length === 0 && <h3>Belum ada artikel</h3>}
+          {articles.length === 0 && (
+            <h4>Tidak ada artikel untuk ditampilkan</h4>
+          )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {articles.map((article) => (
               <ArticleItem key={article.id} article={article} />
