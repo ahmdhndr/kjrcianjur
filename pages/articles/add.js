@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { FaImage } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { API_URL } from '@/config/index';
 import Main from '@/components/Main';
-import Modal from '@/components/Modal';
-import ImageUpload from '@/components/ImageUpload';
 import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { slugify } from 'utils/slugify';

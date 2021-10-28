@@ -9,7 +9,7 @@ export default function Hero({
 }) {
   return (
     <section
-      className={`hero relative flex max-h-hero ${mTop} overflow-hidden bg-white ${addCn}`}
+      className={`hero relative flex max-h-hero mt-12 overflow-hidden bg-white ${addCn}`}
     >
       {imgSrc === '/images/img-default.png' ? (
         <img
@@ -41,5 +41,4 @@ Hero.defaultProps = {
   heroTitle: 'KJR Cianjur',
   heroSubTitle: 'We Are The Future',
   objPos: 'object-center',
-  mTop: 'mt-12',
 };

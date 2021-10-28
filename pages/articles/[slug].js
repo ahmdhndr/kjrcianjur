@@ -91,7 +91,12 @@ export default function ArticlePage({ article }) {
             <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
               <div>
                 {article.user ? (
-                  <p>Ditulis oleh: {article.user.username}</p>
+                  <p>
+                    Ditulis oleh:{' '}
+                    <span className="capitalize font-bold">
+                      {article.user.fullname}
+                    </span>
+                  </p>
                 ) : (
                   <p>Ditulis oleh: Admin</p>
                 )}
@@ -107,7 +112,7 @@ export default function ArticlePage({ article }) {
               }`}
               heroTitle=""
               heroSubTitle=""
-              addCn="mt-0 mb-2"
+              addCn="mt-3 mb-2"
             />
             {/* Description Section */}
             <section

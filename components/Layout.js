@@ -3,7 +3,7 @@ import Header from './Header';
 
 export default function Layout({ children }) {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="relative h-screen flex flex-col">
       <Header />
       <div className="flex-1">{children}</div>
       <Footer />

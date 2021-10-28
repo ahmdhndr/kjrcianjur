@@ -1,8 +1,11 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import AuthContext from '@/context/AuthContext';
 
 export default function Navbar() {
+  const { user, logout } = useContext(AuthContext);
   const router = useRouter();
   const pathUrl = router.pathname;
   const navLinks = [
@@ -34,7 +37,7 @@ export default function Navbar() {
     <>
       <nav className="flex items-center text-white justify-between w-full md:w-auto">
         <Link href="/">
-          <a className="flex items-center">
+          <a className="flex items-center text-white">
             <div className="w-8 h-8 overflow-hidden">
               <img
                 src="/images/logo-kjr-circle.png"
@@ -101,13 +104,58 @@ export default function Navbar() {
               <a
                 className={`${
                   navLink.path === pathUrl ? 'active' : ''
-                } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded`}
+                } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-white`}
                 onClick={() => setIsOpen(false)}
               >
                 {navLink.name}
               </a>
             </Link>
           ))}
+          {user ? (
+            // If logged in
+            <>
+              <Link href="/articles/add">
+                <a
+                  onClick={() => setIsOpen(false)}
+                  className={`${
+                    pathUrl === '/articles/add' ? 'active' : ''
+                  } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-white`}
+                >
+                  Tambah Artikel
+                </a>
+              </Link>
+              <Link href="/account/dashboard">
+                <a
+                  onClick={() => setIsOpen(false)}
+                  className={`${
+                    pathUrl === '/account/dashboard' ? 'active' : ''
+                  } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-white md:mr-3`}
+                >
+                  Dashboard
+                </a>
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="text-white text-center md:text-left bg-primary-100 rounded-md p-2"
+              >
+                <FaSignOutAlt className="inline-block" /> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/account/login">
+                <a
+                  onClick={() => setIsOpen(false)}
+                  className="text-white text-center md:text-left bg-primary-100 rounded-md p-2"
+                >
+                  <FaSignInAlt className="inline-block" /> login
+                </a>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </>

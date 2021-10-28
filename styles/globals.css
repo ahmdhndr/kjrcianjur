@@ -23,6 +23,9 @@ h5 {
 h6 {
   font-size: 6px;
 }
+a {
+  color: #003363;
+}
 
 /* Utilities */
 
