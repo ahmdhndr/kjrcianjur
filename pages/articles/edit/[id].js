@@ -1,19 +1,29 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaImage } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// helpers
+import { parseCookies } from '@/helpers/index';
+
 import { API_URL } from '@/config/index';
+
 import Main from '@/components/Main';
 import Modal from '@/components/Modal';
 import ImageUpload from '@/components/ImageUpload';
 import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { slugify } from 'utils/slugify';
+import AuthContext from '@/context/AuthContext';
 
-export default function EditArticlePage({ article }) {
+export default function EditArticlePage({ article, token }) {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return null;
+  }
 
   const [values, setValues] = useState({
     title: article.title,
@@ -40,18 +50,23 @@ export default function EditArticlePage({ article }) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });
 
       if (!res.ok) {
+        if (res.status === 403 || res.status === 401) {
+          toast.error('Unauthorized');
+          return;
+        }
         toast.error('Terjadi kesalahan');
       } else {
         const article = await res.json();
-        toast.success('Artikel berhasil diupdate');
+        toast.success('Artikel berhasil diperbarui');
         setTimeout(() => {
           router.push(`/articles/${article.slug}`);
-        }, 1000);
+        }, 2000);
       }
     }
   };
@@ -79,7 +94,6 @@ export default function EditArticlePage({ article }) {
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
           draggable
           pauseOnHover={false}
         />
@@ -96,7 +110,7 @@ export default function EditArticlePage({ article }) {
             </div>
           ) : (
             <div>
-              <p>Belum ada gambar</p>
+              <p>Cover artikel belum diupload</p>
             </div>
           )}
           <div className="mt-3">
@@ -115,6 +129,7 @@ export default function EditArticlePage({ article }) {
                 <label htmlFor="title">Judul Artikel</label>
                 <Gap height={5} />
                 <input
+                  autoFocus
                   type="text"
                   id="title"
                   name="title"
@@ -180,19 +195,25 @@ export default function EditArticlePage({ article }) {
         </form>
       </Main>
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <ImageUpload articleId={article.id} imageUploaded={imageUploaded} />
+        <ImageUpload
+          articleId={article.id}
+          imageUploaded={imageUploaded}
+          token={token}
+        />
       </Modal>
     </>
   );
 }
 
 export async function getServerSideProps({ params: { id }, req }) {
+  const { token } = parseCookies(req);
   const res = await fetch(`${API_URL}/articles/${id}`);
   const article = await res.json();
 
-  console.log(req.headers.cookie);
-
   return {
-    props: { article },
+    props: {
+      article,
+      token: token || '',
+    },
   };
 }

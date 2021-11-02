@@ -11,16 +11,13 @@ import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { API_URL } from '@/config/index';
-import { useRouter } from 'next/router';
 
-export default function LoginPage({ members }) {
+export default function LoginPage({ members, username: resUser }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-
-  const router = useRouter();
 
   const { register, error } = useContext(AuthContext);
 
@@ -28,6 +25,7 @@ export default function LoginPage({ members }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const isUserExist = resUser.find((user) => user === username);
     const isMemberEmail = members.some((member) => member.email === email);
     const isMemberName = members.some(
       (member) => member.name.toLowerCase() === fullname.toLowerCase()
@@ -43,13 +41,17 @@ export default function LoginPage({ members }) {
       toast.error('Mohon untuk mengisi semua form!');
       return;
     }
+    if (isUserExist) {
+      toast.error('Username telah digunakan');
+      return;
+    }
     if (password !== passwordConfirm) {
       toast.error('Password tidak sama!');
       return;
     }
     if (isMemberEmail && isMemberName) {
       register({ email, username, fullname, password });
-      toast.success('Berhasil menambahkan User');
+      toast.success('Akun Anda berhasil dibuat');
     } else {
       toast.error('Anda belum terdaftar sebagai anggota KJR Cianjur.');
       return;
@@ -65,12 +67,11 @@ export default function LoginPage({ members }) {
           </h2>
           <ToastContainer
             position="top-center"
-            autoClose={3000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
             draggable
             pauseOnHover={false}
           />
@@ -79,6 +80,7 @@ export default function LoginPage({ members }) {
               <label htmlFor="username">Username</label>
               <Gap height={5} />
               <input
+                autoFocus
                 type="text"
                 id="username"
                 value={username}
@@ -152,12 +154,17 @@ export default function LoginPage({ members }) {
 }
 
 export async function getStaticProps() {
+  // Check username exists
+  const userRes = await fetch(`${API_URL}/users`);
+  const users = await userRes.json();
+  const username = users.map((user) => user.username);
+
   // Check member
   const memberRes = await fetch(`${API_URL}/members`);
   const members = await memberRes.json();
 
   return {
-    props: { members },
+    props: { members, username },
     revalidate: 1,
   };
 }

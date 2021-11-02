@@ -1,13 +1,5 @@
-import Link from 'next/link';
 import marked from 'marked';
-import {
-  FaWhatsapp,
-  FaFacebook,
-  FaTwitter,
-  FaTelegram,
-  FaPencilAlt,
-  FaTimes,
-} from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
 
 import moment from 'moment';
 import 'moment/locale/id';
@@ -17,33 +9,13 @@ import {
   WhatsappShareButton,
   TelegramShareButton,
 } from 'react-share';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import Hero from '@/components/Hero';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import { API_URL, BASE_URL } from '@/config/index';
-import { useRouter } from 'next/router';
 
 export default function ArticlePage({ article }) {
-  const router = useRouter();
-  const deleteArticle = async (e) => {
-    if (confirm('Are you sure?')) {
-      const res = await fetch(`${API_URL}/articles/${article.id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.message);
-      } else {
-        toast.success('Artikel berhasil dihapus');
-        setTimeout(() => router.push('/articles'), 2000);
-      }
-    }
-  };
-
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
   return (
@@ -53,41 +25,11 @@ export default function ArticlePage({ article }) {
         description={`${article.description}`}
       />
       <Main cn="mt-14 md:pl-0 mb-5">
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-        />
         <div className="text-secondary-200">
           <div className="card rounded-sm overflow-hidden">
-            {/* <Link href="/">
-              <a className="block mb-5">{'<'} Kembali</a>
-            </Link> */}
-            <div className="sm:block md:grid md:grid-cols-4 md:items-center md:justify-between">
-              <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
-                {article.title}
-              </h1>
-              <div className="md:justify-self-end flex items-center md:col-span-1">
-                <Link href={`/articles/edit/${article.id}`}>
-                  <a className="block text-primary-200 rounded-md items-end">
-                    <FaPencilAlt className="inline-block" /> Edit Artikel
-                  </a>
-                </Link>
-                <button
-                  type="button"
-                  className="block text-red-700 rounded-md ml-3 w-auto items-end"
-                  onClick={deleteArticle}
-                >
-                  <FaTimes className="inline-block" /> Hapus
-                </button>
-              </div>
-            </div>
+            <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
+              {article.title}
+            </h1>
             <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
               <div>
                 {article.user ? (
@@ -153,21 +95,33 @@ export default function ArticlePage({ article }) {
   );
 }
 
-export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/articles`);
-  const articles = await res.json();
+// export async function getStaticPaths() {
+//   const res = await fetch(`${API_URL}/articles`);
+//   const articles = await res.json();
 
-  const paths = articles.map((article) => ({
-    params: { slug: article.slug },
-  }));
+//   const paths = articles.map((article) => ({
+//     params: { slug: article.slug },
+//   }));
 
-  return {
-    paths,
-    fallback: true,
-  };
-}
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// }
 
-export async function getStaticProps({ params: { slug } }) {
+// export async function getStaticProps({ params: { slug } }) {
+//   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
+//   const articles = await res.json();
+
+//   return {
+//     props: {
+//       article: articles[0],
+//     },
+//     revalidate: 1,
+//   };
+// }
+
+export async function getServerSideProps({ query: { slug } }) {
   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
   const articles = await res.json();
 
@@ -175,17 +129,5 @@ export async function getStaticProps({ params: { slug } }) {
     props: {
       article: articles[0],
     },
-    revalidate: 1,
   };
 }
-
-// export async function getServerSideProps({ query: { slug } }) {
-//   const res = await fetch(`${API_URL}/api/articles/${slug}`);
-//   const articles = await res.json();
-
-//   return {
-//     props: {
-//       article: articles[0],
-//     },
-//   };
-// }

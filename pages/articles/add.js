@@ -1,23 +1,31 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+// helpers
+import { parseCookies } from '@/helpers/index';
 
 import { API_URL } from '@/config/index';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { slugify } from 'utils/slugify';
+import AuthContext from '@/context/AuthContext';
 
-export default function AddArticlePage() {
+export default function AddArticlePage({ token }) {
   const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return null;
+  }
+
   const [values, setValues] = useState({
     title: '',
     description: '',
     content: '',
   });
-  // const [imagePreview, setImagePreview] = useState('/images/img-default.png');
-  // const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (e) => {
     let valid = true;
@@ -34,17 +42,24 @@ export default function AddArticlePage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });
 
       if (!res.ok) {
+        if (res.status === 403 || res.status === 401) {
+          toast.error('Token tidak tersedia');
+          return;
+        }
         toast.error('Terjadi kesalahan');
       } else {
         await res.json();
-        toast.success('Artikel berhasil ditambahkan, mengalihkan...');
+        toast.success(
+          'Artikel berhasil ditambahkan, mengalihkan ke halaman dashboard...'
+        );
         setTimeout(() => {
-          router.push('/articles');
+          router.push('/account/dashboard');
         }, 2000);
       }
     }
@@ -54,13 +69,6 @@ export default function AddArticlePage() {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
-
-  // const imageUploaded = async (e) => {
-  //   const res = await fetch(`${API_URL}/articles/${article.id}`);
-  //   const data = await res.json();
-  //   setImagePreview(data.image.formats.large.url);
-  //   setShowModal(false);
-  // };
 
   return (
     <>
@@ -73,31 +81,10 @@ export default function AddArticlePage() {
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
           draggable
           pauseOnHover={false}
         />
         <h2 className="text-3xl font-bold mb-5">Tambah Artikel</h2>
-        {/* Imagemage section */}
-        {/* <div className="relative">
-          {imagePreview && (
-            <div className="image-placeholder w-full h-full md:h-96 bg-white relative overflow-hidden rounded">
-              <img
-                src={imagePreview}
-                alt="Thumbnail"
-                className="w-60 h-60 relative md:top-16 left-1/2 transform -translate-x-1/2 object-cover object-center"
-              />
-            </div>
-          )}
-          <div className="absolute bottom-2 left-2">
-            <button
-              onClick={() => setShowModal(true)}
-              className="bg-primary-200 text-white p-2 rounded-md"
-            >
-              <FaImage className="inline-block" /> Update Cover
-            </button>
-          </div>
-        </div> */}
         <form onSubmit={handleSubmit}>
           <div className="max-w-3xl mx-auto">
             <div className="rounded-md bg-white mt-5 p-5">
@@ -105,6 +92,7 @@ export default function AddArticlePage() {
                 <label htmlFor="title">Judul Artikel</label>
                 <Gap height={5} />
                 <input
+                  autoFocus
                   type="text"
                   id="title"
                   name="title"
@@ -117,6 +105,9 @@ export default function AddArticlePage() {
               <Gap height={10} />
               <div>
                 <label htmlFor="slug">Slug URL</label>
+                <small className="text-red-500 italic block">
+                  {'* Terisi otomatis'}
+                </small>
                 <Gap height={5} />
                 <input
                   disabled
@@ -169,9 +160,16 @@ export default function AddArticlePage() {
           </div>
         </form>
       </Main>
-      {/* <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <ImageUpload imageUploaded={imageUploaded} />
-      </Modal> */}
     </>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookies(req);
+
+  return {
+    props: {
+      token: token || '',
+    },
+  };
 }

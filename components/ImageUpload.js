@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { API_URL } from '../config/index';
 
-export default function ImageUpload({ articleId, imageUploaded }) {
+export default function ImageUpload({ articleId, imageUploaded, token }) {
   const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -14,6 +14,9 @@ export default function ImageUpload({ articleId, imageUploaded }) {
 
     const res = await fetch(`${API_URL}/upload`, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     });
 
@@ -21,6 +24,7 @@ export default function ImageUpload({ articleId, imageUploaded }) {
       imageUploaded();
     }
   };
+
   const handleFileChange = (e) => {
     setImage(e.target.files[0]);
   };

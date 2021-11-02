@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useState, useContext } from 'react';
-import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaChevronDown, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import AuthContext from '@/context/AuthContext';
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
+  const { fullname } = user ? user : '';
+  const firstName = fullname ? fullname.split(' ')[0] : '';
   const router = useRouter();
   const pathUrl = router.pathname;
   const navLinks = [
@@ -28,9 +30,15 @@ export default function Navbar() {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
   const hamburgerClickHandler = () => {
     setIsOpen(!isOpen);
+    setShowDropdown(false);
   };
 
   return (
@@ -105,7 +113,10 @@ export default function Navbar() {
                 className={`${
                   navLink.path === pathUrl ? 'active' : ''
                 } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-white`}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setShowDropdown(false);
+                }}
               >
                 {navLink.name}
               </a>
@@ -113,42 +124,54 @@ export default function Navbar() {
           ))}
           {user ? (
             // If logged in
-            <>
-              <Link href="/articles/add">
-                <a
-                  onClick={() => setIsOpen(false)}
-                  className={`${
-                    pathUrl === '/articles/add' ? 'active' : ''
-                  } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-white`}
-                >
-                  Tambah Artikel
-                </a>
-              </Link>
-              <Link href="/account/dashboard">
-                <a
-                  onClick={() => setIsOpen(false)}
-                  className={`${
-                    pathUrl === '/account/dashboard' ? 'active' : ''
-                  } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-white md:mr-3`}
-                >
-                  Dashboard
-                </a>
-              </Link>
+            <div className="block my-2 mx-0 md:my-0 md:mx-2 p-2 text-white dropdown relative">
               <button
-                onClick={() => {
-                  logout();
-                  setIsOpen(false);
-                }}
-                className="text-white text-center md:text-left bg-primary-100 rounded-md p-2"
+                className="flex items-center justify-center dropbtn"
+                onClick={handleDropdown}
               >
-                <FaSignOutAlt className="inline-block" /> Logout
+                <p className="capitalize">
+                  Halo, <strong>{firstName}</strong>
+                </p>{' '}
+                <FaChevronDown className="ml-2" />
               </button>
-            </>
+              <div
+                className={`${
+                  showDropdown && 'show'
+                } md:w-40 dropdown-content md:absolute bg-transparent overflow-hidden md:bg-primary-200 right-0 py-2 px-0`}
+              >
+                <Link href="/account/dashboard">
+                  <a
+                    className={`${
+                      pathUrl === '/account/dashboard' ? 'active' : ''
+                    } nav-link block my-2 mx-0 md:my-0 md:mx-2 p-2 rounded text-left text-white`}
+                    onClick={() => {
+                      setIsOpen(false);
+                      setShowDropdown(false);
+                    }}
+                  >
+                    Dashboard
+                  </a>
+                </Link>
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsOpen(false);
+                    setShowDropdown(false);
+                  }}
+                  className="my-2 mx-0 md:my-1 md:mx-2  px-0 md:p-2 rounded text-left text-white hover:text-red-700"
+                >
+                  <FaSignOutAlt className="inline-block" /> Logout
+                </button>
+              </div>
+            </div>
           ) : (
             <>
               <Link href="/account/login">
                 <a
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    setShowDropdown(false);
+                  }}
                   className="text-white text-center md:text-left bg-primary-100 rounded-md p-2"
                 >
                   <FaSignInAlt className="inline-block" /> login

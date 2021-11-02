@@ -4,7 +4,7 @@ import { API_URL } from '@/config/index';
 export default async (req, res) => {
   if (req.method === 'POST') {
     // get user object from req.body
-    const { username, email, fullname, password } = req.body;
+    const { username, email, fullname, password, confirmed } = req.body;
 
     const strapiRes = await fetch(`${API_URL}/auth/local/register`, {
       method: 'POST',
@@ -16,6 +16,7 @@ export default async (req, res) => {
         email,
         fullname,
         password,
+        confirmed,
       }),
     });
 

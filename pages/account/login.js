@@ -13,6 +13,7 @@ import Gap from '@/components/Gap';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const { login, error } = useContext(AuthContext);
@@ -21,7 +22,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login({ email, password });
+    login({ identifier: email || username, password });
   };
   return (
     <>
@@ -38,19 +39,21 @@ export default function LoginPage() {
             newestOnTop={false}
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
             draggable
             pauseOnHover={false}
           />
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email">Alamat Email</label>
+              <label htmlFor="identifier">Username / Email</label>
               <Gap height={5} />
               <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                autoFocus
+                type="text"
+                id="identifier"
+                value={email || username}
+                onChange={(e) =>
+                  setEmail(e.target.value) || setUsername(e.target.value)
+                }
                 className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
               />
             </div>

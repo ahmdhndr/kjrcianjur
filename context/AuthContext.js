@@ -5,7 +5,7 @@
 
 import { createContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { BASE_URL } from '@/config/index';
+import { BASE_URL, PROTECTED_ROUTES } from '@/config/index';
 
 // Create Context
 const AuthContext = createContext();
@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   // Register user
   const register = async (user) => {
+    // await isLoggedIn();
     const res = await fetch(`${BASE_URL}/api/register`, {
       method: 'POST',
       headers: {
@@ -43,7 +44,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Login user
-  const login = async ({ email: identifier, password }) => {
+  const login = async ({ identifier, password }) => {
+    // await isLoggedIn();
     const res = await fetch(`${BASE_URL}/api/login`, {
       method: 'POST',
       headers: {
@@ -73,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     });
     if (res.ok) {
       setUser(null);
-      router.push('/');
+      router.push('/account/login');
     }
   };
 
@@ -85,12 +87,18 @@ export const AuthProvider = ({ children }) => {
     if (res.ok) {
       setUser(data.user);
     } else {
+      // setError(data.message);
       setUser(null);
+      if (PROTECTED_ROUTES.includes(router.pathname)) {
+        router.push('/account/login');
+      }
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, error, register, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, error, register, login, logout, isLoggedIn }}
+    >
       {children}
     </AuthContext.Provider>
   );
