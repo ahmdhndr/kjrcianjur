@@ -16,10 +16,15 @@ import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { slugify } from 'utils/slugify';
 import AuthContext from '@/context/AuthContext';
+import Error from 'pages/_error';
 
-export default function EditArticlePage({ article, token }) {
+export default function EditArticlePage({ article, token, errorCode }) {
   const router = useRouter();
   const { user } = useContext(AuthContext);
+
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
 
   if (!user) {
     return null;
@@ -214,12 +219,14 @@ export default function EditArticlePage({ article, token }) {
 export async function getServerSideProps({ params: { id }, req }) {
   const { token } = parseCookies(req);
   const res = await fetch(`${API_URL}/articles/${id}`);
+  const errorCode = res.ok ? false : res.statusCode;
   const article = await res.json();
 
   return {
     props: {
-      article,
+      article: article,
       token: token || '',
+      errorCode,
     },
   };
 }

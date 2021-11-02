@@ -14,10 +14,17 @@ import Hero from '@/components/Hero';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import { API_URL, BASE_URL } from '@/config/index';
+import Error from 'pages/_error';
 
-export default function ArticlePage({ article }) {
+export default function ArticlePage({ article, errorCode }) {
+  console.log(article);
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
+
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
+
   return (
     <>
       <Seo
@@ -123,11 +130,13 @@ export default function ArticlePage({ article }) {
 
 export async function getServerSideProps({ query: { slug } }) {
   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
+  const errorCode = res.ok ? false : res.statusCode;
   const articles = await res.json();
 
   return {
     props: {
       article: articles[0],
+      errorCode,
     },
   };
 }

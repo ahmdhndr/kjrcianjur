@@ -6,8 +6,12 @@ import Seo from '@/components/Seo';
 // config
 import { API_URL, PER_PAGE } from '@/config/index';
 import Pagination from '@/components/Pagination';
+import Error from 'pages/_error';
 
-export default function Articles({ articles, page, total }) {
+export default function Articles({ articles, page, total, errorCode }) {
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
   return (
     <>
       <Seo title="KJR Cianjur | Semua Artikel" />
@@ -47,9 +51,10 @@ export async function getServerSideProps({ query: { page = 1 } }) {
   const articleRes = await fetch(
     `${API_URL}/articles?_sort=created_at:DESC&_limit=${PER_PAGE}&_start=${start}`
   );
+  const errorCode = articleRes.ok ? false : articleRes.statusCode;
   const articles = await articleRes.json();
 
   return {
-    props: { articles, page: +page, total },
+    props: { articles, page: +page, total, errorCode },
   };
 }
