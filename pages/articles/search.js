@@ -35,7 +35,7 @@ export default function SearchPage({ articles }) {
             </div>
             <Search />
           </div>
-          {articles.length === 0 && <h3>Belum ada artikel</h3>}
+          {articles.length === 0 && <h3>Artikel tidak ditemukan</h3>}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {articles.map((article) => (
               <ArticleItem key={article.id} article={article} />
