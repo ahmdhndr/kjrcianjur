@@ -25,6 +25,10 @@ export default function EditArticlePage({ article, token }) {
     return null;
   }
 
+  if (user.id !== article.user.id) {
+    router.push('/');
+  }
+
   const [values, setValues] = useState({
     title: article.title,
     description: article.description,
@@ -129,7 +133,6 @@ export default function EditArticlePage({ article, token }) {
                 <label htmlFor="title">Judul Artikel</label>
                 <Gap height={5} />
                 <input
-                  autoFocus
                   type="text"
                   id="title"
                   name="title"
@@ -142,6 +145,9 @@ export default function EditArticlePage({ article, token }) {
               <Gap height={10} />
               <div>
                 <label htmlFor="slug">Slug URL</label>
+                <small className="text-red-500 italic block">
+                  {'* Terisi otomatis'}
+                </small>
                 <Gap height={5} />
                 <input
                   disabled
