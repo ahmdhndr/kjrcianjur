@@ -17,7 +17,6 @@ import { API_URL, BASE_URL } from '@/config/index';
 import Error from 'pages/_error';
 
 export default function ArticlePage({ article, errorCode }) {
-  console.log(article);
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
 
