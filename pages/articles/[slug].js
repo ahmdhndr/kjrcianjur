@@ -1,14 +1,5 @@
 import marked from 'marked';
-import {
-  FaWhatsapp,
-  FaFacebook,
-  FaTwitter,
-  FaTelegram,
-  FaPencilAlt,
-  FaTrash,
-} from 'react-icons/fa';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { FaWhatsapp, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
 
 import moment from 'moment';
 import 'moment/locale/id';
@@ -23,19 +14,9 @@ import Hero from '@/components/Hero';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import { API_URL, BASE_URL } from '@/config/index';
-import AuthContext from '@/context/AuthContext';
 import Error from 'pages/_error';
-import { useContext } from 'react';
-import { parseCookies } from '@/helpers/index';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-export default function ArticlePage({ article, errorCode, token }) {
-  const { user } = useContext(AuthContext);
-  const isOwner = user.id === article.user.id;
-  const router = useRouter();
-
+export default function ArticlePage({ article, errorCode }) {
   // Share Article
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
@@ -44,25 +25,6 @@ export default function ArticlePage({ article, errorCode, token }) {
     return <Error statusCode={errorCode} />;
   }
 
-  const deleteArticle = async (id) => {
-    if (confirm('Anda yakin ingin menghapus artikel ini?')) {
-      const res = await fetch(`${API_URL}/articles/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.message);
-      } else {
-        toast.success('Artikel berhasil dihapus');
-        router.push('/account/dashboard');
-      }
-    }
-  };
-
   return (
     <>
       <Seo
@@ -70,36 +32,12 @@ export default function ArticlePage({ article, errorCode, token }) {
         description={`${article.description}`}
       />
       <Main cn="mt-14 xl:pl-0 mb-5">
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          draggable
-          pauseOnHover={false}
-        />
         <div className="text-secondary-200">
           <div className="card rounded-sm overflow-hidden">
             <div className="flex items-center justify-between">
               <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
                 {article.title}
               </h1>
-              {isOwner && (
-                <div className="flex">
-                  <Link href={`/articles/edit/${article.id}`}>
-                    <a className="bg-primary-200 rounded-md article-edit flex justify-center text-white p-2 cursor-pointer hover:bg-primary-100 w-full mr-1">
-                      <FaPencilAlt />
-                    </a>
-                  </Link>
-                  <div onClick={() => deleteArticle(article.id)}>
-                    <a className="bg-red-700 rounded-md article-edit flex justify-center text-white p-2 cursor-pointer hover:bg-red-800 w-full">
-                      <FaTrash />
-                    </a>
-                  </div>
-                </div>
-              )}
             </div>
             <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
               <div>
@@ -194,8 +132,7 @@ export default function ArticlePage({ article, errorCode, token }) {
 //   };
 // }
 
-export async function getServerSideProps({ query: { slug }, req }) {
-  const { token } = parseCookies(req);
+export async function getServerSideProps({ query: { slug } }) {
   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
   const errorCode = res.ok ? false : res.statusCode;
   const articles = await res.json();
@@ -204,7 +141,6 @@ export async function getServerSideProps({ query: { slug }, req }) {
     props: {
       article: articles[0],
       errorCode,
-      token: token || '',
     },
   };
 }
