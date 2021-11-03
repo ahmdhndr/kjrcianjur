@@ -69,7 +69,7 @@ export default function ArticlePage({ article, errorCode }) {
             />
             {/* Description Section */}
             <section
-              className="article-content prose"
+              className="article-content mx-auto prose"
               dangerouslySetInnerHTML={{ __html: marked(article.content) }}
             ></section>
 
