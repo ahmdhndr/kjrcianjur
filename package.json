@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.4.1",
     "cookie": "^0.4.1",
     "marked": "^3.0.7",
     "moment": "^2.29.1",

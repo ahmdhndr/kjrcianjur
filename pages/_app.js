@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import 'tailwindcss/tailwind.css';
 import '@/styles/globals.css';
+import 'tailwindcss/tailwind.css';
 import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
 import { AuthProvider } from '@/context/AuthContext';
