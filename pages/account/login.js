@@ -1,5 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
+import ScaleLoader from 'react-spinners/ScaleLoader';
+import { css } from '@emotion/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
@@ -16,15 +18,25 @@ export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { login, error } = useContext(AuthContext);
 
   useEffect(() => error && toast.error(error));
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     login({ identifier: email || username, password });
+    setLoading(false);
   };
+
+  const override = css`
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  `;
+
   return (
     <>
       <Seo title="KJR Cianjur | Login User" />
@@ -71,14 +83,30 @@ export default function LoginPage() {
               />
             </div>
             <Gap height={10} />
-            <input
-              type="submit"
-              value="Login"
-              className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 focus:bg-primary-100 text-white cursor-pointer"
-            />
+            {loading ? (
+              <div className="p-2 rounded-md w-full bg-gray-400 text-white cursor-not-allowed">
+                <ScaleLoader
+                  height={20}
+                  width={4}
+                  radius={2}
+                  margin={2}
+                  color={'#e5e7eb'}
+                  css={override}
+                  loading={loading}
+                  speedMultiplier={1.1}
+                />
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 text-white cursor-pointer"
+              >
+                Login
+              </button>
+            )}
           </form>
           <button
-            className="absolute right-3 top-44 -mt-2 text-primary-200 p-3"
+            className="absolute right-3 top-44 -mt-7 text-primary-200 p-3"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
