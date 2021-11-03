@@ -33,8 +33,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function ArticlePage({ article, errorCode, token }) {
   const { user } = useContext(AuthContext);
-  const isOwner = user.id === article.user.id;
-  const router = useRouter();
+  // const isOwner = user.id === article.user.id;
+  // const router = useRouter();
 
   // Share Article
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
@@ -44,24 +44,24 @@ export default function ArticlePage({ article, errorCode, token }) {
     return <Error statusCode={errorCode} />;
   }
 
-  const deleteArticle = async (id) => {
-    if (confirm('Anda yakin ingin menghapus artikel ini?')) {
-      const res = await fetch(`${API_URL}/articles/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
+  // const deleteArticle = async (id) => {
+  //   if (confirm('Anda yakin ingin menghapus artikel ini?')) {
+  //     const res = await fetch(`${API_URL}/articles/${id}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     const data = await res.json();
 
-      if (!res.ok) {
-        toast.error(data.message);
-      } else {
-        toast.success('Artikel berhasil dihapus');
-        router.push('/account/dashboard');
-      }
-    }
-  };
+  //     if (!res.ok) {
+  //       toast.error(data.message);
+  //     } else {
+  //       toast.success('Artikel berhasil dihapus');
+  //       router.push('/account/dashboard');
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function ArticlePage({ article, errorCode, token }) {
               <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
                 {article.title}
               </h1>
-              {isOwner ? (
+              {/* {isOwner && (
                 <div className="flex">
                   <Link href={`/articles/edit/${article.id}`}>
                     <a className="bg-primary-200 rounded-md article-edit flex justify-center text-white p-2 cursor-pointer hover:bg-primary-100 w-full mr-1">
@@ -99,9 +99,7 @@ export default function ArticlePage({ article, errorCode, token }) {
                     </a>
                   </div>
                 </div>
-              ) : (
-                ''
-              )}
+              )} */}
             </div>
             <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
               <div>
@@ -195,7 +193,7 @@ export default function ArticlePage({ article, errorCode, token }) {
 // }
 
 export async function getServerSideProps({ query: { slug }, req }) {
-  const { token } = parseCookies(req);
+  // const { token } = parseCookies(req);
   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
   const errorCode = res.ok ? false : res.statusCode;
   const articles = await res.json();
@@ -204,7 +202,7 @@ export async function getServerSideProps({ query: { slug }, req }) {
     props: {
       article: articles[0],
       errorCode,
-      token: token || '',
+      // token: token || '',
     },
   };
 }
