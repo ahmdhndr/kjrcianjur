@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
@@ -18,6 +18,7 @@ export default function LoginPage({ members, username: resUser }) {
   const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, error } = useContext(AuthContext);
 
@@ -61,7 +62,7 @@ export default function LoginPage({ members, username: resUser }) {
     <>
       <Seo title="KJR Cianjur | Register User" />
       <Main cn="mt-14">
-        <div className="mx-auto max-w-xl bg-white rounded-md p-3">
+        <div className="mx-auto max-w-xl bg-white rounded-md p-3 relative">
           <h2 className="flex items-center font-bold mb-3">
             <FaUser className="mr-2" /> Daftar User
           </h2>
@@ -117,7 +118,7 @@ export default function LoginPage({ members, username: resUser }) {
               <label htmlFor="password">Password</label>
               <Gap height={5} />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -129,7 +130,7 @@ export default function LoginPage({ members, username: resUser }) {
               <label htmlFor="passwordConfirm">Konfirmasi Password</label>
               <Gap height={5} />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="passwordConfirm"
                 value={passwordConfirm}
                 onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -143,6 +144,16 @@ export default function LoginPage({ members, username: resUser }) {
               className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 focus:bg-primary-100 text-white cursor-pointer"
             />
           </form>
+          <button
+            className="absolute right-3 bottom-48 -mb-6 text-primary-200 p-3"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <FaEyeSlash className="text-xl" />
+            ) : (
+              <FaEye className="text-xl" />
+            )}
+          </button>
           <Gap height={10} />
           <p>
             Sudah punya akun? <Link href="/account/login">Login</Link>

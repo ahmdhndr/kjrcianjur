@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
@@ -15,6 +15,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login, error } = useContext(AuthContext);
 
@@ -28,7 +29,7 @@ export default function LoginPage() {
     <>
       <Seo title="KJR Cianjur | Login User" />
       <Main cn="mt-14">
-        <div className="mt-0 md:mt-8 mx-auto max-w-xl bg-white rounded-md p-3">
+        <div className="mt-0 md:mt-8 mx-auto max-w-xl bg-white rounded-md p-3 relative">
           <h2 className="flex items-center font-bold mb-3">
             <FaUser className="mr-2" /> Log In
           </h2>
@@ -62,7 +63,7 @@ export default function LoginPage() {
               <label htmlFor="password">Password</label>
               <Gap height={5} />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -76,6 +77,16 @@ export default function LoginPage() {
               className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 focus:bg-primary-100 text-white cursor-pointer"
             />
           </form>
+          <button
+            className="absolute right-3 top-44 -mt-2 text-primary-200 p-3"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <FaEyeSlash className="text-xl" />
+            ) : (
+              <FaEye className="text-xl" />
+            )}
+          </button>
           <Gap height={10} />
           <p>
             Belum punya akun? <Link href="/account/register">Daftar</Link>

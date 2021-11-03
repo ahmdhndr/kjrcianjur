@@ -30,7 +30,7 @@ export default function ArticlePage({ article, errorCode }) {
         title={`KJR Cianjur | ${article.title}`}
         description={`${article.description}`}
       />
-      <Main cn="mt-14 md:pl-0 mb-5">
+      <Main cn="mt-14 xl:pl-0 mb-5">
         <div className="text-secondary-200">
           <div className="card rounded-sm overflow-hidden">
             <h1 className="text-4xl font-extrabold capitalize md:col-span-3">

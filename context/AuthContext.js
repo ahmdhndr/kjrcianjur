@@ -87,7 +87,6 @@ export const AuthProvider = ({ children }) => {
     if (res.ok) {
       setUser(data.user);
     } else {
-      // setError(data.message);
       setUser(null);
       if (PROTECTED_ROUTES.includes(router.pathname)) {
         router.push('/account/login');
