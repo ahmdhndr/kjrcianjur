@@ -57,7 +57,7 @@ export default function DashboardPage({ articles, token }) {
           <div className="mb-5">
             <h2 className="font-bold mb-2">Dashboard</h2>
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-primary-100">My Article</h3>
+              <h3 className="font-bold text-primary-100">Artikel Saya</h3>
               <Link href="/articles/add">
                 <a className="bg-primary-200 text-white px-3 py-2 rounded-md">
                   Tambah Artikel

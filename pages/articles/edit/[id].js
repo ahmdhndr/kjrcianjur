@@ -73,9 +73,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
       } else {
         const article = await res.json();
         toast.success('Artikel berhasil diperbarui');
-        setTimeout(() => {
-          router.push(`/articles/${article.slug}`);
-        }, 2000);
+        router.push(`/articles/${article.slug}`);
       }
     }
   };
@@ -224,7 +222,7 @@ export async function getServerSideProps({ params: { id }, req }) {
 
   return {
     props: {
-      article: article,
+      article,
       token: token || '',
       errorCode,
     },

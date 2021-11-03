@@ -54,9 +54,9 @@ export default function DashboardArticle({ article, handleDelete }) {
           </Link>
           <div
             onClick={() => handleDelete(article.id)}
-            className="article-delete p-4 cursor-pointer hover:bg-primary-100 w-full flex justify-center"
+            className="bg-red-700 article-delete p-4 cursor-pointer hover:bg-red-800 w-full flex justify-center"
           >
-            <button type="button" className="text-red-700">
+            <button type="button" className="text-white">
               <FaTrash className="text-xl" />
             </button>
           </div>

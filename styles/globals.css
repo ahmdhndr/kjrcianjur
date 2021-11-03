@@ -31,6 +31,85 @@ a {
   color: #003363;
 }
 
+/* Loading CSS */
+.body-loading {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background-color: rgba(0, 51, 99, 0.5);
+}
+
+.none {
+  display: none;
+}
+
+.circle-loader {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.circle-loader div {
+  position: absolute;
+  top: 33px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.circle-loader div:nth-child(1) {
+  left: 8px;
+  animation: circle_loader1 0.6s infinite;
+}
+.circle-loader div:nth-child(2) {
+  left: 8px;
+  animation: circle_loader2 0.6s infinite;
+}
+.circle-loader div:nth-child(3) {
+  left: 32px;
+  animation: circle_loader2 0.6s infinite;
+}
+.circle-loader div:nth-child(4) {
+  left: 56px;
+  animation: circle_loader3 0.6s infinite;
+}
+
+@keyframes circle_loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes circle_loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes circle_loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
 /* Utilities */
 
 .btn {

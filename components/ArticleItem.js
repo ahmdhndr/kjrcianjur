@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import moment from 'moment';
 import 'moment/locale/id';
+import { useState } from 'react';
 
 export default function ArticleItem({ article }) {
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <article className="card rounded-xl overflow-hidden p-5 relative text-gray-300 bg-white shadow-sm">
@@ -30,9 +32,13 @@ export default function ArticleItem({ article }) {
           </div>
         </div>
         <div className="article-details mt-auto grid w-full overflow-hidden justify-self-center">
-          <h2 className="uppercase font-extrabold text-secondary-200 text-xl sm:h-16">
-            {article.title}
-          </h2>
+          <Link href={`/articles/${article.slug}`}>
+            <a>
+              <h2 className="uppercase font-extrabold text-secondary-200 text-xl sm:h-16">
+                {article.title}
+              </h2>
+            </a>
+          </Link>
           <div className="text-gray-500 font-light my-4 h-14 overflow-y-auto custom-scroll">
             {article.description}
           </div>

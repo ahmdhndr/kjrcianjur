@@ -14,8 +14,8 @@ const AuthContext = createContext();
  * Create Provider that basically wraps around the rest of entire application
  */
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [user, setUser] = useState('');
+  const [error, setError] = useState('');
 
   const router = useRouter();
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       setTimeout(() => router.push('/account/dashboard'), 3000);
     } else {
       setError(data.message);
-      setError(null);
+      setError('');
     }
   };
 
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
       method: 'POST',
     });
     if (res.ok) {
-      setUser(null);
+      setUser('');
       router.push('/account/login');
     }
   };
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
     if (res.ok) {
       setUser(data.user);
     } else {
-      setUser(null);
+      setUser('');
       if (PROTECTED_ROUTES.includes(router.pathname)) {
         router.push('/account/login');
       }
