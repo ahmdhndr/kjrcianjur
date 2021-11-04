@@ -27,8 +27,11 @@ export default function LoginPage() {
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    login({ identifier: email || username, password });
-    setLoading(false);
+    const timer = setTimeout(() => {
+      login({ identifier: email || username, password });
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
   };
 
   const override = css`

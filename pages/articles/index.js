@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import ArticleItem from '@/components/ArticleItem';
 import Main from '@/components/Main';
 import Search from '@/components/Search';
@@ -8,13 +9,13 @@ import { API_URL, PER_PAGE } from '@/config/index';
 import Pagination from '@/components/Pagination';
 import Error from 'pages/_error';
 
+// Skeleton
+import ArticleSkeleton from '@/components/Skeleton/ArticleSkeleton';
+
 export default function Articles({ articles, page, total, errorCode }) {
-  if (errorCode) {
-    return <Error statusCode={errorCode} />;
-  }
-  return (
+  const [loading, setLoading] = useState(false);
+  const articlePage = (
     <>
-      <Seo title="KJR Cianjur | Semua Artikel" />
       <Main cn="mt-14">
         <section className="articles">
           <div className="mb-5 flex items-center justify-between">
@@ -35,6 +36,26 @@ export default function Articles({ articles, page, total, errorCode }) {
         </section>
         <Pagination page={page} total={total} />
       </Main>
+    </>
+  );
+
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      articlePage;
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <Seo title="KJR Cianjur | Semua Artikel" />
+      {loading ? <ArticleSkeleton /> : articlePage}
     </>
   );
 }

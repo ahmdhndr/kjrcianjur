@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import moment from 'moment';
 import 'moment/locale/id';
+import Skeleton from 'react-loading-skeleton';
 import { useState } from 'react';
 
 export default function ArticleItem({ article }) {
-  const [loading, setLoading] = useState(false);
   return (
     <>
       <article className="card rounded-xl overflow-hidden p-5 relative text-gray-300 bg-white shadow-sm">

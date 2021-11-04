@@ -45,7 +45,6 @@ export const AuthProvider = ({ children }) => {
 
   // Login user
   const login = async ({ identifier, password }) => {
-    // await isLoggedIn();
     const res = await fetch(`${BASE_URL}/api/login`, {
       method: 'POST',
       headers: {
@@ -64,7 +63,7 @@ export const AuthProvider = ({ children }) => {
       router.push('/account/dashboard');
     } else {
       setError(data.message);
-      setError(null);
+      setError('');
     }
   };
 

@@ -1,13 +1,10 @@
-import ScaleLoader from 'react-spinners/ScaleLoader';
+import DotLoader from 'react-spinners/DotLoader';
 
 export default function Loading({ loading }) {
   return (
     <div className={loading ? 'body-loading' : 'none'}>
-      <ScaleLoader
-        height={35}
-        width={4}
-        radius={2}
-        margin={2}
+      <DotLoader
+        size={60}
         color={'#e5e7eb'}
         loading={loading}
         speedMultiplier={1}

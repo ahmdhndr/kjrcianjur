@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 import Hero from '@/components/Hero';
@@ -5,10 +6,13 @@ import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
+// Skeleton
+import AboutSkeleton from '@/components/Skeleton/AboutSkeleton';
+
 export default function AboutPage() {
-  return (
+  const [loading, setLoading] = useState(false);
+  const aboutPage = (
     <>
-      <Seo title="KJR Cianjur | Tentang KJR" />
       <Hero
         imgSrc="/images/foto-8.jpg"
         imgAlt="Gambar: Gabungan Anggota KJR"
@@ -163,6 +167,22 @@ export default function AboutPage() {
           </div>
         </div>
       </Main>
+    </>
+  );
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      aboutPage;
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <Seo title="KJR Cianjur | Tentang KJR" />
+      {loading ? <AboutSkeleton /> : aboutPage}
     </>
   );
 }

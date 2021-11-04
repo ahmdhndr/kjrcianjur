@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 import ArticleItem from '@/components/ArticleItem';
@@ -7,11 +8,12 @@ import Seo from '@/components/Seo';
 
 // config
 import { API_URL } from '@/config/index';
+import HomeSkeleton from '@/components/Skeleton/HomeSkeleton';
 
 export default function Home({ articles }) {
-  return (
+  const [loading, setLoading] = useState(false);
+  const homePage = (
     <>
-      <Seo title="KJR Cianjur | Beranda" />
       <Hero
         imgSrc="/images/bg-image.jpg"
         imgAlt="Gambar: Anggota KJR Cianjur"
@@ -41,6 +43,22 @@ export default function Home({ articles }) {
           </a>
         </Link>
       </Main>
+    </>
+  );
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      homePage;
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <Seo title="KJR Cianjur | Beranda" />
+      {loading ? <HomeSkeleton /> : homePage}
     </>
   );
 }

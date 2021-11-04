@@ -159,7 +159,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
                   name="slug"
                   value={slugify(values.title)}
                   onChange={handleInputChange}
-                  className="text-gray-500 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                  className="border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent bg-gray-200 text-gray-400"
                   placeholder="otomatis-terisi-mengikuti-judul-artikel"
                 />
               </div>

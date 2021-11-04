@@ -41,4 +41,5 @@ Hero.defaultProps = {
   heroTitle: 'KJR Cianjur',
   heroSubTitle: 'We Are The Future',
   objPos: 'object-center',
+  addCn: '',
 };

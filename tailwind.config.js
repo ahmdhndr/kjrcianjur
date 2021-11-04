@@ -31,7 +31,7 @@ module.exports = {
         'small-screen': '355px',
       },
       height: {
-        hero: '80vh',
+        hero: '510px',
         'small-screen': '355px',
       },
       borderRadius: {

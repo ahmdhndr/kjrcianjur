@@ -116,7 +116,7 @@ export default function AddArticlePage({ token }) {
                   name="slug"
                   value={slugify(values.title)}
                   onChange={handleInputChange}
-                  className="text-gray-500 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                  className="border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent bg-gray-200"
                   placeholder="otomatis-terisi-mengikuti-judul-artikel"
                 />
               </div>
