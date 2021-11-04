@@ -1,22 +1,24 @@
-import marked from 'marked';
+import { useState, useEffect } from 'react';
 import { FaWhatsapp, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
-
-import moment from 'moment';
-import 'moment/locale/id';
 import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   TelegramShareButton,
 } from 'react-share';
+import marked from 'marked';
+import moment from 'moment';
+import 'moment/locale/id';
 
 import Hero from '@/components/Hero';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import { API_URL, BASE_URL } from '@/config/index';
 import Error from 'pages/_error';
+import ArticleDetailSkeleton from '@/components/Skeleton/ArticleDetailSkeleton';
 
 export default function ArticlePage({ article, errorCode }) {
+  const [loading, setLoading] = useState(false);
   // Share Article
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
@@ -25,83 +27,96 @@ export default function ArticlePage({ article, errorCode }) {
     return <Error statusCode={errorCode} />;
   }
 
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      articleDetailPage;
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const articleDetailPage = (
+    <Main cn="mt-14 xl:pl-0 mb-5">
+      <div className="text-secondary-200">
+        <div className="card rounded-sm overflow-hidden">
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
+              {article.title}
+            </h1>
+          </div>
+          <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
+            <div>
+              {article.user ? (
+                <p>
+                  Ditulis oleh:{' '}
+                  <span className="capitalize font-bold">
+                    {article.user.fullname}
+                  </span>
+                </p>
+              ) : (
+                <p>
+                  Ditulis oleh: <span className="font-bold">Admin</span>
+                </p>
+              )}
+              <p>{`Terakhir diperbarui: ${moment(article.updated_at)
+                .locale('id')
+                .format('llll')}`}</p>
+            </div>
+          </div>
+          {/* Hero Section */}
+          <Hero
+            imgSrc={`${
+              article.image ? article.image.url : '/images/default.jpg'
+            }`}
+            heroTitle=""
+            heroSubTitle=""
+            addCn="mt-3 mb-2"
+          />
+          {/* Description Section */}
+          <section
+            className="article-content mx-auto prose"
+            dangerouslySetInnerHTML={{ __html: marked(article.content) }}
+          ></section>
+
+          {/* Share Artikel */}
+          <div className="share-article mt-10">
+            <h4>Bagikan artikel ini</h4>
+            <div className="flex items-center">
+              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+                <WhatsappShareButton url={shareUrl} quote={title}>
+                  <FaWhatsapp className="text-white text-2xl" />
+                </WhatsappShareButton>
+              </div>
+              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+                <FacebookShareButton url={shareUrl} quote={title}>
+                  <FaFacebook className="text-white text-2xl" />
+                </FacebookShareButton>
+              </div>
+              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+                <TwitterShareButton url={shareUrl} quote={title}>
+                  <FaTwitter className="text-white text-2xl" />
+                </TwitterShareButton>
+              </div>
+              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+                <TelegramShareButton url={shareUrl} quote={title}>
+                  <FaTelegram className="text-white text-2xl" />
+                </TelegramShareButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Main>
+  );
+
   return (
     <>
       <Seo
         title={`KJR Cianjur | ${article.title}`}
         description={`${article.description}`}
       />
-      <Main cn="mt-14 xl:pl-0 mb-5">
-        <div className="text-secondary-200">
-          <div className="card rounded-sm overflow-hidden">
-            <div className="flex items-center justify-between">
-              <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
-                {article.title}
-              </h1>
-            </div>
-            <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
-              <div>
-                {article.user ? (
-                  <p>
-                    Ditulis oleh:{' '}
-                    <span className="capitalize font-bold">
-                      {article.user.fullname}
-                    </span>
-                  </p>
-                ) : (
-                  <p>
-                    Ditulis oleh: <span className="font-bold">Admin</span>
-                  </p>
-                )}
-                <p>{`Terakhir diperbarui: ${moment(article.updated_at)
-                  .locale('id')
-                  .format('llll')}`}</p>
-              </div>
-            </div>
-            {/* Hero Section */}
-            <Hero
-              imgSrc={`${
-                article.image ? article.image.url : '/images/default.jpg'
-              }`}
-              heroTitle=""
-              heroSubTitle=""
-              addCn="mt-3 mb-2"
-            />
-            {/* Description Section */}
-            <section
-              className="article-content mx-auto prose"
-              dangerouslySetInnerHTML={{ __html: marked(article.content) }}
-            ></section>
-
-            {/* Share Artikel */}
-            <div className="share-article mt-10">
-              <h4>Bagikan artikel ini</h4>
-              <div className="flex items-center">
-                <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
-                  <WhatsappShareButton url={shareUrl} quote={title}>
-                    <FaWhatsapp className="text-white text-2xl" />
-                  </WhatsappShareButton>
-                </div>
-                <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
-                  <FacebookShareButton url={shareUrl} quote={title}>
-                    <FaFacebook className="text-white text-2xl" />
-                  </FacebookShareButton>
-                </div>
-                <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
-                  <TwitterShareButton url={shareUrl} quote={title}>
-                    <FaTwitter className="text-white text-2xl" />
-                  </TwitterShareButton>
-                </div>
-                <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
-                  <TelegramShareButton url={shareUrl} quote={title}>
-                    <FaTelegram className="text-white text-2xl" />
-                  </TelegramShareButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Main>
+      {loading ? <ArticleDetailSkeleton /> : articleDetailPage}
     </>
   );
 }

@@ -6,7 +6,7 @@ export default function HomeSkeleton() {
     <SkeletonTheme baseColor="#9ca0a3" highlightColor="#cccccc">
       {/* Hero Skeleton */}
       <div className="max-h-hero w-full mt-12">
-        <Skeleton duration={2} className="h-60 md:h-hero" />
+        <Skeleton className="h-60 md:h-hero" />
       </div>
 
       {/* Main Skeleton */}
@@ -15,7 +15,7 @@ export default function HomeSkeleton() {
           <Skeleton className="mt-2" height={25} width={250} />
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -32,7 +32,7 @@ export default function HomeSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -49,7 +49,7 @@ export default function HomeSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}

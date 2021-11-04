@@ -51,7 +51,7 @@ export default function Home({ articles }) {
     const timer = setTimeout(() => {
       homePage;
       setLoading(false);
-    }, 2000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 

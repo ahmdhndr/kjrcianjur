@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
       method: 'POST',
     });
     if (res.ok) {
-      setUser('');
+      setUser(null);
       router.push('/account/login');
     }
   };

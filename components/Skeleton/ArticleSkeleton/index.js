@@ -10,7 +10,7 @@ export default function ArticleSkeleton() {
           <Skeleton className="mt-2" height={25} width={250} />
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -27,7 +27,7 @@ export default function ArticleSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -44,7 +44,7 @@ export default function ArticleSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -61,7 +61,7 @@ export default function ArticleSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -78,7 +78,7 @@ export default function ArticleSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}
@@ -95,7 +95,7 @@ export default function ArticleSkeleton() {
               </a>
             </div>
           </div>
-          <div className="card bg-gray-500 p-5 rounded-xl overflow-hidden relative">
+          <div className="card bg-gray-300 p-5 rounded-xl overflow-hidden relative">
             <Skeleton
               height={200}
               width={'100%'}

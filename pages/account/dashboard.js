@@ -14,7 +14,6 @@ import AuthContext from '@/context/AuthContext';
 import DashboardSkeleton from '@/components/Skeleton/DashboardSkeleton';
 
 export default function DashboardPage({ articles, token }) {
-  const [loading, setLoading] = useState(false);
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
@@ -22,8 +21,28 @@ export default function DashboardPage({ articles, token }) {
     return null;
   }
 
-  const dashboardPage = (
+  const deleteArticle = async (id) => {
+    if (confirm('Anda yakin ingin menghapus artikel ini?')) {
+      const res = await fetch(`${API_URL}/articles/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message);
+      } else {
+        toast.success('Artikel berhasil dihapus');
+        setTimeout(() => router.reload(), 2000);
+      }
+    }
+  };
+
+  return (
     <>
+      <Seo title="KJR Cianjur | Halaman Dashboard" />
       <Main cn="mt-14 md:pl-0">
         <ToastContainer
           position="top-center"
@@ -63,41 +82,6 @@ export default function DashboardPage({ articles, token }) {
             ))}
         </div>
       </Main>
-    </>
-  );
-
-  const deleteArticle = async (id) => {
-    if (confirm('Anda yakin ingin menghapus artikel ini?')) {
-      const res = await fetch(`${API_URL}/articles/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.message);
-      } else {
-        toast.success('Artikel berhasil dihapus');
-        setTimeout(() => router.reload(), 2000);
-      }
-    }
-  };
-
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      dashboardPage;
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <>
-      <Seo title="KJR Cianjur | Halaman Dashboard" />
-      {loading ? <DashboardSkeleton /> : dashboardPage}
     </>
   );
 }

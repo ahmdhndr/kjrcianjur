@@ -6,6 +6,7 @@ import 'tailwindcss/tailwind.css';
 import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
 import { AuthProvider } from '@/context/AuthContext';
+import DashboardSkeleton from '@/components/Skeleton/DashboardSkeleton';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
