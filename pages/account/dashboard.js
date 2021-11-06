@@ -16,6 +16,7 @@ import DashboardSkeleton from '@/components/Skeleton/DashboardSkeleton';
 export default function DashboardPage({ articles, token }) {
   const { user } = useContext(AuthContext);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   if (!user) {
     return null;
@@ -40,48 +41,60 @@ export default function DashboardPage({ articles, token }) {
     }
   };
 
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1500);
+  //   return () => clearTimeout(timer);
+  // }, []);
+
   return (
     <>
       <Seo title="KJR Cianjur | Halaman Dashboard" />
-      <Main cn="mt-14 md:pl-0">
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          draggable
-          pauseOnHover={false}
-        />
-        <div className="mb-5">
-          <h2 className="font-bold text-xl mb-2">Halaman Dashboard</h2>
-          <div className="flex items-center justify-between">
-            <h3 className="font-bold text-2xl text-primary-100">
-              Artikel Saya
-            </h3>
-            <Link href="/articles/add">
-              <a className="bg-primary-200 text-white px-3 py-2 rounded-md">
-                Tambah Artikel
-              </a>
-            </Link>
+      {loading ? (
+        <DashboardSkeleton />
+      ) : (
+        <Main cn="mt-14 md:pl-0">
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable
+            pauseOnHover={false}
+          />
+          <div className="mb-5">
+            <h2 className="font-bold text-xl mb-2">Halaman Dashboard</h2>
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-2xl text-primary-100">
+                Artikel Saya
+              </h3>
+              <Link href="/articles/add">
+                <a className="bg-primary-200 text-white px-3 py-2 rounded-md">
+                  Tambah Artikel
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {articles &&
-            (articles.length > 0 ? (
-              articles.map((article) => (
-                <DashboardArticle
-                  key={article.id}
-                  article={article}
-                  handleDelete={deleteArticle}
-                />
-              ))
-            ) : (
-              <h4>Anda belum membuat artikel</h4>
-            ))}
-        </div>
-      </Main>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {articles &&
+              (articles.length > 0 ? (
+                articles.map((article) => (
+                  <DashboardArticle
+                    key={article.id}
+                    article={article}
+                    handleDelete={deleteArticle}
+                  />
+                ))
+              ) : (
+                <h4>Anda belum membuat artikel</h4>
+              ))}
+          </div>
+        </Main>
+      )}
     </>
   );
 }

@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import moment from 'moment';
 import 'moment/locale/id';
-import Skeleton from 'react-loading-skeleton';
-import { useState } from 'react';
 
 export default function ArticleItem({ article }) {
   return (
