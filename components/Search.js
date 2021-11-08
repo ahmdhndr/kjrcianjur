@@ -12,16 +12,14 @@ export default function Search() {
   };
 
   return (
-    <div className="bg-white p-1 md:p-2 rounded-md">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="px-1"
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
-          placeholder="Cari Artikel"
-        />
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="p-2 text-sm w-full rounded-md"
+        value={term}
+        onChange={(e) => setTerm(e.target.value)}
+        placeholder="Cari Artikel"
+      />
+    </form>
   );
 }

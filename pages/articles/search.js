@@ -16,10 +16,11 @@ export default function SearchPage({ articles }) {
       <Seo title="KJR Cianjur | Hasil Pencarian" />
       <Main cn="mt-14">
         <section className="articles">
-          <div className="mb-5 flex items-center justify-between">
-            <div className="flex-1">
+          <div className="mb-5 flex flex-col md:flex-row md:items-center justify-between">
+            <div className="flex-1 mb-3 md:mb-0">
               <h3 className="font-bold text-secondary-100">
-                Hasil dari pencarian: {router.query.term}
+                Hasil pencarian:{' '}
+                <span className="capitalize">{router.query.term}</span>
               </h3>
               <div className="bg-gray-300 h-1 w-1/4"></div>
             </div>
