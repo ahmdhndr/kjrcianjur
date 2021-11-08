@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import qs from 'qs';
-import { FaChevronLeft } from 'react-icons/fa';
 
 import ArticleItem from '@/components/ArticleItem';
 import Main from '@/components/Main';
@@ -18,14 +16,6 @@ export default function SearchPage({ articles }) {
       <Seo title="KJR Cianjur | Hasil Pencarian" />
       <Main cn="mt-14">
         <section className="articles">
-          {/* <div className="block">
-            <Link href="/articles">
-              <a className="flex items-center">
-                <FaChevronLeft className="mr-2" />
-                Kembali
-              </a>
-            </Link>
-          </div> */}
           <div className="mb-5 flex items-center justify-between">
             <div className="flex-1">
               <h3 className="font-bold text-secondary-100">
@@ -35,7 +25,9 @@ export default function SearchPage({ articles }) {
             </div>
             <Search />
           </div>
-          {articles.length === 0 && <h3>Artikel tidak ditemukan</h3>}
+          {articles.length === 0 && (
+            <h3>Artikel yang anda cari tidak ditemukan</h3>
+          )}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {articles.map((article) => (
               <ArticleItem key={article.id} article={article} />

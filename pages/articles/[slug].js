@@ -163,12 +163,18 @@ export default function ArticlePage({ article, errorCode }) {
 
 export async function getServerSideProps({ query: { slug } }) {
   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
-  const errorCode = res.ok ? false : res.statusCode;
-  const articles = await res.json();
+  const errorCode = res.ok ? false : res.status;
+  const data = await res.json();
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      article: articles[0],
+      article: data[0],
       errorCode,
     },
   };

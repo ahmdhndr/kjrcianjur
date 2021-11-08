@@ -233,12 +233,18 @@ export default function EditArticlePage({ article, token, errorCode }) {
 export async function getServerSideProps({ params: { id }, req }) {
   const { token } = parseCookies(req);
   const res = await fetch(`${API_URL}/articles/${id}`);
-  const errorCode = res.ok ? false : res.statusCode;
-  const article = await res.json();
+  const errorCode = res.ok ? false : res.status;
+  const data = await res.json();
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      article,
+      article: data,
       token: token || '',
       errorCode,
     },

@@ -18,9 +18,9 @@ export default function Articles({ articles, page, total, errorCode }) {
     <>
       <Main cn="mt-14">
         <section className="articles">
-          <div className="mb-5 flex items-center justify-between">
-            <div className="flex-1">
-              <h3 className="font-bold text-secondary-100">Artikel</h3>
+          <div className="mb-5 flex flex-col md:flex-row md:items-center justify-between">
+            <div className="flex-1 mb-3 md:mb-0">
+              <h3 className="font-bold text-secondary-100">Semua Artikel</h3>
               <div className="bg-gray-300 h-1 w-1/4"></div>
             </div>
             <Search />
@@ -72,7 +72,7 @@ export async function getServerSideProps({ query: { page = 1 } }) {
   const articleRes = await fetch(
     `${API_URL}/articles?_sort=created_at:DESC&_limit=${PER_PAGE}&_start=${start}`
   );
-  const errorCode = articleRes.ok ? false : articleRes.statusCode;
+  const errorCode = articleRes.ok ? false : articleRes.status;
   const articles = await articleRes.json();
 
   return {
