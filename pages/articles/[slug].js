@@ -23,6 +23,9 @@ export default function ArticlePage({ article, errorCode }) {
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
 
+  const splitTags = article.tags ? article.tags.split(', ') : '';
+  console.log(splitTags);
+
   if (errorCode) {
     return <Error statusCode={errorCode} />;
   }
@@ -46,28 +49,28 @@ export default function ArticlePage({ article, errorCode }) {
             </h1>
           </div>
           <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
-            <div>
+            <div className="flex">
               {article.user ? (
                 <p>
-                  Ditulis oleh:{' '}
                   <span className="capitalize font-bold">
                     {article.user.fullname}
                   </span>
                 </p>
               ) : (
                 <p>
-                  Ditulis oleh: <span className="font-bold">Admin</span>
+                  <span className="font-bold">Admin</span>
                 </p>
               )}
-              <p>{`Terakhir diperbarui: ${moment(article.updated_at)
-                .locale('id')
-                .format('llll')}`}</p>
+              <span className="mx-1">-</span>
+              <p>{moment(article.updated_at).locale('id').format('llll')}</p>
             </div>
           </div>
           {/* Hero Section */}
           <Hero
             imgSrc={`${
-              article.image ? article.image.url : '/images/default.jpg'
+              article.image
+                ? article.image.formats.large.url
+                : 'https://res.cloudinary.com/kjr-cianjur/image/upload/v1636256756/large_default_44a80e1393.jpg'
             }`}
             heroTitle=""
             heroSubTitle=""
@@ -79,8 +82,20 @@ export default function ArticlePage({ article, errorCode }) {
             dangerouslySetInnerHTML={{ __html: marked(article.content) }}
           ></section>
 
+          {/* Tag Artikel */}
+          {splitTags.length > 0 && (
+            <div>
+              <h4>Tags: </h4>
+              {splitTags.map((tag) => (
+                <div className="bg-primary-200 text-white px-2 py-1 rounded-md inline-block mr-2">
+                  {tag}
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Share Artikel */}
-          <div className="share-article mt-10">
+          <div className="share-article mt-5">
             <h4>Bagikan artikel ini</h4>
             <div className="flex items-center">
               <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">

@@ -1,4 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
+import { ScaleLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,52 +14,76 @@ import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { API_URL } from '@/config/index';
 
-export default function LoginPage({ members, username: resUser }) {
+export default function LoginPage({
+  members,
+  username: resUser,
+  email: resEmail,
+}) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { register, error } = useContext(AuthContext);
 
-  useEffect(() => error && toast.error(error));
-
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     const isUserExist = resUser.find((user) => user === username);
+    const isEmailExist = resEmail.find((em) => em === email);
     const isMemberEmail = members.some((member) => member.email === email);
     const isMemberName = members.some(
       (member) => member.name.toLowerCase() === fullname.toLowerCase()
     );
 
-    if (
-      username === '' ||
-      email === '' ||
-      fullname === '' ||
-      password === '' ||
-      passwordConfirm === ''
-    ) {
-      toast.error('Mohon untuk mengisi semua form!');
-      return;
-    }
-    if (isUserExist) {
-      toast.error('Username telah digunakan');
-      return;
-    }
-    if (password !== passwordConfirm) {
-      toast.error('Password tidak sama!');
-      return;
-    }
-    if (isMemberEmail && isMemberName) {
-      register({ email, username, fullname, password });
-      toast.success('Akun Anda berhasil dibuat');
-    } else {
-      toast.error('Anda belum terdaftar sebagai anggota KJR Cianjur.');
-      return;
-    }
+    const timer = setTimeout(() => {
+      if (
+        username === '' ||
+        email === '' ||
+        fullname === '' ||
+        password === '' ||
+        passwordConfirm === ''
+      ) {
+        toast.error('Mohon untuk mengisi semua form!');
+        return setLoading(false);
+      }
+      if (isUserExist) {
+        toast.error('Username telah digunakan');
+        return setLoading(false);
+      }
+      if (isEmailExist) {
+        toast.error('Email telah digunakan');
+        return setLoading(false);
+      }
+      if (password !== passwordConfirm) {
+        toast.error('Password tidak sama!');
+        return setLoading(false);
+      }
+      if (isMemberEmail && isMemberName) {
+        register({ email, username, fullname, password });
+        toast.success('Akun Anda berhasil dibuat');
+        setLoading(false);
+      } else {
+        toast.error('Anda belum terdaftar sebagai anggota KJR Cianjur.');
+        return setLoading(false);
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
   };
+
+  const override = css`
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  `;
+
+  useEffect(() => {
+    error && toast.error(error);
+  });
+
   return (
     <>
       <Seo title="KJR Cianjur | Register User" />
@@ -138,11 +164,27 @@ export default function LoginPage({ members, username: resUser }) {
               />
             </div>
             <Gap height={10} />
-            <input
-              type="submit"
-              value="Register"
-              className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 focus:bg-primary-100 text-white cursor-pointer"
-            />
+            {loading ? (
+              <div className="p-2 rounded-md w-full bg-gray-400 text-white cursor-not-allowed">
+                <ScaleLoader
+                  height={20}
+                  width={4}
+                  radius={2}
+                  margin={2}
+                  color={'#e5e7eb'}
+                  css={override}
+                  loading={loading}
+                  speedMultiplier={1.1}
+                />
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 text-white cursor-pointer"
+              >
+                Register
+              </button>
+            )}
           </form>
           <button
             className="absolute right-3 bottom-48 -mb-6 text-primary-200 p-3"
@@ -165,17 +207,18 @@ export default function LoginPage({ members, username: resUser }) {
 }
 
 export async function getStaticProps() {
-  // Check username exists
+  // Check username && email exists
   const userRes = await fetch(`${API_URL}/users`);
   const users = await userRes.json();
   const username = users.map((user) => user.username);
+  const email = users.map((user) => user.email);
 
   // Check member
   const memberRes = await fetch(`${API_URL}/members`);
   const members = await memberRes.json();
 
   return {
-    props: { members, username },
+    props: { members, username, email },
     revalidate: 1,
   };
 }

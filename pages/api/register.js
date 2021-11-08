@@ -24,17 +24,16 @@ export default async (req, res) => {
 
     if (strapiRes.ok) {
       // Set Cookie
-      res.setHeader(
-        'Set-Cookie',
-        cookie.serialize('token', data.jwt, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== 'development',
-          maxAge: 60 * 60, // 1 Jam
-          sameSite: 'strict',
-          path: '/',
-        })
-      );
-
+      // res.setHeader(
+      //   'Set-Cookie',
+      //   cookie.serialize('token', data.jwt, {
+      //     httpOnly: true,
+      //     secure: process.env.NODE_ENV !== 'development',
+      //     maxAge: 60 * 60, // 1 Jam
+      //     sameSite: 'strict',
+      //     path: '/',
+      //   })
+      // );
       res.status(200).json({ user: data.user });
     } else {
       res

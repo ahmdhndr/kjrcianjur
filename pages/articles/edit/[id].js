@@ -38,6 +38,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
     title: article.title,
     description: article.description,
     content: article.content,
+    tags: article.tags,
   });
   const [imagePreview, setImagePreview] = useState(
     article.image ? article.image.formats.large.url : null
@@ -55,6 +56,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
     }
 
     if (valid) {
+      // console.log(article);
       const res = await fetch(`${API_URL}/articles/${article.id}`, {
         method: 'PUT',
         headers: {
@@ -175,6 +177,20 @@ export default function EditArticlePage({ article, token, errorCode }) {
                   onChange={handleInputChange}
                   className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
                   placeholder="Ex: KJR Cianjur merupakan sebuah organisasi..."
+                />
+              </div>
+              <Gap height={10} />
+              <div>
+                <label htmlFor="tags">Tag Artikel</label>
+                <Gap height={5} />
+                <input
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  value={values.tags}
+                  onChange={handleInputChange}
+                  className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                  placeholder="Ex: KJR, Jantung Sehat, remaja hebat"
                 />
               </div>
               <Gap height={10} />

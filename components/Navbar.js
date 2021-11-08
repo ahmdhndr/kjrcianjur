@@ -45,7 +45,13 @@ export default function Navbar() {
     <>
       <nav className="flex items-center text-white justify-between w-full md:w-auto">
         <Link href="/">
-          <a className="flex items-center text-white">
+          <a
+            className="flex items-center text-white"
+            onClick={() => {
+              setIsOpen(false);
+              setShowDropdown(false);
+            }}
+          >
             <div className="w-8 h-8 overflow-hidden">
               <img
                 src="/images/logo-kjr-circle.png"
@@ -81,7 +87,13 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between px-2 py-3 md:hidden">
           <Link href="/">
-            <a className="w-8 h-8 overflow-hidden">
+            <a
+              className="w-8 h-8 overflow-hidden"
+              onClick={() => {
+                setIsOpen(false);
+                setShowDropdown(false);
+              }}
+            >
               <img
                 src="/images/logo-kjr-circle.png"
                 alt="Logo KJR"

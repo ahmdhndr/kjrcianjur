@@ -30,7 +30,7 @@ export default function LoginPage() {
     const timer = setTimeout(() => {
       login({ identifier: email || username, password });
       setLoading(false);
-    }, 2000);
+    }, 1500);
     return () => clearTimeout(timer);
   };
 

@@ -34,8 +34,8 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
 
     if (res.ok) {
-      setUser(data.user);
-      setTimeout(() => router.push('/account/dashboard'), 3000);
+      // setUser(data.user);
+      setTimeout(() => router.push('/account/login'), 1500);
     } else {
       setError(data.message);
       setError('');

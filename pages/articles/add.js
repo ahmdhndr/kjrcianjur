@@ -25,6 +25,7 @@ export default function AddArticlePage({ token }) {
     title: '',
     description: '',
     content: '',
+    tags: 'KJR Cianjur',
   });
 
   const handleSubmit = async (e) => {
@@ -38,6 +39,7 @@ export default function AddArticlePage({ token }) {
     }
 
     if (valid) {
+      // console.log(values)
       const res = await fetch(`${API_URL}/articles`, {
         method: 'POST',
         headers: {
@@ -132,6 +134,20 @@ export default function AddArticlePage({ token }) {
                   onChange={handleInputChange}
                   className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
                   placeholder="Ex: KJR Cianjur merupakan sebuah organisasi..."
+                />
+              </div>
+              <Gap height={10} />
+              <div>
+                <label htmlFor="tags">Tag Artikel</label>
+                <Gap height={5} />
+                <input
+                  type="text"
+                  id="tags"
+                  name="tags"
+                  value={values.tags}
+                  onChange={handleInputChange}
+                  className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                  placeholder="Ex: kjr, jantung, sehat"
                 />
               </div>
               <Gap height={10} />

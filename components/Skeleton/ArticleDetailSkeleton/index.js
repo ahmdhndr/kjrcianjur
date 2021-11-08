@@ -9,7 +9,6 @@ export default function ArticleDetailSkeleton() {
         <div className="mt-12">
           <Skeleton height={45} width={300} />
           <Skeleton className="mt-2" height={15} width={200} />
-          <Skeleton height={15} width={200} />
         </div>
 
         {/* Hero Skeleton */}
