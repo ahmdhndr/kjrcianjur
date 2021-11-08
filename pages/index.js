@@ -11,7 +11,7 @@ import { API_URL } from '@/config/index';
 import HomeSkeleton from '@/components/Skeleton/HomeSkeleton';
 
 export default function Home({ articles }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const homePage = (
     <>
       <Hero

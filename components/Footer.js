@@ -16,7 +16,9 @@ export default function Footer() {
               Jl. Ir. H. Juanda No. 79-A, Pamoyanan. <br />
               Kec. Cianjur Kab. Cianjur, Jawa Barat, 43211.
             </p>
-            <p>Telp: +62 821 1234 1234</p>
+            <Link href="mailto:kjrcianjur@gmail.com">
+              <a>Email: kjrcianjur@gmail.com</a>
+            </Link>
           </div>
         </div>
         <div className="col-span-2 mt-3 justify-self-center sm:col-span-1 sm:justify-self-end sm:mt-0">
