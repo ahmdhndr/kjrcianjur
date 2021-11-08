@@ -24,7 +24,6 @@ export default function ArticlePage({ article, errorCode }) {
   const title = `${article.title}`;
 
   const splitTags = article.tags ? article.tags.split(', ') : '';
-  console.log(splitTags);
 
   if (errorCode) {
     return <Error statusCode={errorCode} />;
@@ -84,11 +83,11 @@ export default function ArticlePage({ article, errorCode }) {
 
           {/* Tag Artikel */}
           {splitTags.length > 0 && (
-            <div>
-              <h4>Tags: </h4>
+            <div className="my-3">
+              <h4 className="mb-1">Tagar: </h4>
               {splitTags.map((tag) => (
-                <div className="bg-primary-200 text-white px-2 py-1 rounded-md inline-block mr-2">
-                  {tag}
+                <div className="bg-primary-200 text-white px-2 py-1 rounded-sm inline-block mr-2 text-sm">
+                  {tag.toLowerCase()}
                 </div>
               ))}
             </div>

@@ -25,7 +25,7 @@ export default function AddArticlePage({ token }) {
     title: '',
     description: '',
     content: '',
-    tags: 'KJR Cianjur',
+    tags: '',
   });
 
   const handleSubmit = async (e) => {
