@@ -12,10 +12,15 @@ import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { slugify } from 'utils/slugify';
 import AuthContext from '@/context/AuthContext';
+import { FaImage } from 'react-icons/fa';
 
 export default function AddArticlePage({ token }) {
   const router = useRouter();
   const { user } = useContext(AuthContext);
+  const [imagePreview, setImagePreview] = useState(
+    'https://res.cloudinary.com/kjr-cianjur/image/upload/v1636256756/large_default_44a80e1393.jpg'
+  );
+  const [image, setImage] = useState(null);
 
   if (!user) {
     return null;
@@ -67,10 +72,37 @@ export default function AddArticlePage({ token }) {
     }
   };
 
+  // const handleImage = async (e) => {
+  //   e.preventDefault();
+  //   // Image Handler
+  //   const formData = new FormData();
+  //   formData.append('files', image);
+  //   formData.append('ref', 'articles');
+  //   formData.append('field', 'image');
+
+  //   const res = await fetch(`${API_URL}/upload`, {
+  //     method: 'POST',
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     body: formData,
+  //   });
+
+  //   console.log(res, formData);
+
+  //   if (res.ok) {
+  //     imageUploaded();
+  //   }
+  // };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
+
+  // const handleFileChange = (e) => {
+  //   setImage(e.target.files[0]);
+  // };
 
   return (
     <>
@@ -87,6 +119,34 @@ export default function AddArticlePage({ token }) {
           pauseOnHover={false}
         />
         <h2 className="text-3xl font-bold mb-5">Tambah Artikel</h2>
+        <div className="relative">
+          {/* Image Upload */}
+          {imagePreview && (
+            <div className="image-placeholder w-full h-full md:h-96 bg-white relative overflow-hidden rounded">
+              <img
+                src={imagePreview}
+                alt="Thumbnail"
+                className="w-full relative top-1/2 left-1/2 transform md:-translate-y-1/2 -translate-x-1/2 object-cover object-center"
+              />
+            </div>
+          )}
+          {/* <div className="mt-3">
+            <form onSubmit={handleImage}>
+              <div className="bg-gray-400 border border-gray-600 p-2 rounded-md my-5">
+                <input
+                  className="cursor-pointer"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+              </div>
+              <input
+                className="w-full p-2 bg-primary-200 text-white cursor-pointer rounded-sm"
+                type="submit"
+                value="Upload"
+              />
+            </form>
+          </div> */}
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="max-w-3xl mx-auto">
             <div className="rounded-md bg-white mt-5 p-5">

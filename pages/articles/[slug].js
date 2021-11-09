@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { FaWhatsapp, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
 import {
@@ -16,6 +17,7 @@ import Seo from '@/components/Seo';
 import { API_URL, BASE_URL } from '@/config/index';
 import Error from 'pages/_error';
 import ArticleDetailSkeleton from '@/components/Skeleton/ArticleDetailSkeleton';
+import { slugify } from 'utils/slugify';
 
 export default function ArticlePage({ article, errorCode }) {
   const [loading, setLoading] = useState(false);
@@ -85,11 +87,17 @@ export default function ArticlePage({ article, errorCode }) {
           {splitTags.length > 0 && (
             <div className="my-3">
               <h4 className="mb-1">Tagar: </h4>
-              {splitTags.map((tag) => (
-                <div className="bg-primary-200 text-white px-2 py-1 rounded-sm inline-block mr-2 text-sm">
-                  {tag.toLowerCase()}
-                </div>
-              ))}
+              <div className="flex items-center">
+                {splitTags.map((tag, index) => (
+                  <div key={index}>
+                    <Link href={`/articles/tag/${slugify(tag)}`}>
+                      <a className="bg-primary-200 hover:bg-primary-100 text-white px-2 py-1 rounded-sm inline-block mr-2 text-sm">
+                        {tag}
+                      </a>
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -163,14 +171,8 @@ export default function ArticlePage({ article, errorCode }) {
 
 export async function getServerSideProps({ query: { slug } }) {
   const res = await fetch(`${API_URL}/articles?slug=${slug}`);
-  const errorCode = res.ok ? false : res.status;
+  const errorCode = res.ok ? false : res.statusCode;
   const data = await res.json();
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
 
   return {
     props: {

@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import moment from 'moment';
 import 'moment/locale/id';
+import { slugify } from 'utils/slugify';
 
 export default function ArticleItem({ article }) {
+  const splitTags = article.tags ? article.tags.split(', ') : '';
+
   return (
     <>
       <article className="card rounded-xl overflow-hidden p-5 relative text-gray-300 bg-white shadow-sm">
@@ -32,7 +35,7 @@ export default function ArticleItem({ article }) {
         <div className="article-details mt-auto grid w-full overflow-hidden justify-self-center">
           <Link href={`/articles/${article.slug}`}>
             <a>
-              <h2 className="uppercase font-extrabold text-secondary-200 text-xl sm:h-16">
+              <h2 className="uppercase font-extrabold text-secondary-200 text-xl sm:h-16 focus:text-primary-200 hover:text-primary-200">
                 {article.title}
               </h2>
             </a>
@@ -40,8 +43,21 @@ export default function ArticleItem({ article }) {
           <div className="text-gray-500 font-light my-4 h-14 overflow-y-auto custom-scroll">
             {article.description}
           </div>
+          {article.tags && (
+            <div className="flex items-center my-2">
+              {splitTags.map((tag, index) => (
+                <div key={index}>
+                  <Link href={`/articles/tag/${slugify(tag)}`}>
+                    <a className="bg-gray-400 hover:bg-gray-500 text-white px-2 py-1 rounded-sm block mr-2 text-sm">
+                      {tag}
+                    </a>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
           <Link href={`/articles/${article.slug}`}>
-            <a className="btn btn-md block btn-primary text-white justify-self-end hover:bg-primary-200 transition duration-100 ease-in">
+            <a className="btn btn-md block btn-primary text-white justify-self-end hover:bg-primary-100 transition duration-100 ease-in">
               <button>Baca selengkapnya</button>
             </a>
           </Link>

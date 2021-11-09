@@ -134,7 +134,7 @@ export default function Navbar() {
               </a>
             </Link>
           ))}
-          {user ? (
+          {user.confirmed ? (
             // If logged in
             <div className="block my-2 mx-0 md:my-0 md:mx-2 p-2 text-white dropdown relative">
               <button
