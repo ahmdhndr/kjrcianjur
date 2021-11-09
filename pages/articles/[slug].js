@@ -63,7 +63,7 @@ export default function ArticlePage({ article, errorCode }) {
                 </p>
               )}
               <span className="mx-1">-</span>
-              <p>{moment(article.updated_at).locale('id').format('llll')}</p>
+              <p>{moment(article.published_at).locale('id').format('llll')}</p>
             </div>
           </div>
           {/* Hero Section */}
