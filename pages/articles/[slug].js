@@ -26,7 +26,7 @@ export default function ArticlePage({ article, errorCode }) {
   const shareUrl = `${BASE_URL}/articles/${article.slug}`;
   const title = `${article.title}`;
 
-  const splitTags = article.tags ? article.tags.split(', ') : '';
+  const splitTags = article.tags ? article.tags.split(',') : '';
 
   if (errorCode) {
     return <Error statusCode={errorCode} />;
@@ -82,11 +82,11 @@ export default function ArticlePage({ article, errorCode }) {
           {splitTags.length > 0 && (
             <div className='my-3'>
               <h4 className='mb-1'>Tagar: </h4>
-              <div className='flex items-center'>
+              <div className='flex flex-wrap gap-2 items-center w-full md:w-1/2'>
                 {splitTags.map((tag, index) => (
                   <div key={index}>
                     <Link href={`/articles/tag/${slugify(tag)}`}>
-                      <a className='bg-primary-200 hover:bg-primary-100 text-white px-2 py-1 rounded-sm inline-block mr-2 text-sm'>
+                      <a className='bg-primary-200 hover:bg-primary-100 text-white px-2 py-1 rounded-sm inline-block text-sm capitalize'>
                         {tag}
                       </a>
                     </Link>
@@ -129,7 +129,11 @@ export default function ArticlePage({ article, errorCode }) {
 
   return (
     <>
-      <Seo title={`KJR Cianjur | ${article.title}`} description={`${article.description}`} />
+      <Seo
+        title={`KJR Cianjur | ${article.title}`}
+        description={`${article.description}`}
+        keyword={splitTags}
+      />
       {loading ? <ArticleDetailSkeleton /> : articleDetailPage}
     </>
   );

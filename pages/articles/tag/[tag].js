@@ -13,29 +13,27 @@ import Error from 'pages/_error';
 export default function TagPage({ articles, errorCode }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const resultArticle = router.query.tag.replace('-', ' ');
+  const resultArticle = router.query.tag.split('-').join(' ');
   const capitalizeArticle = resultArticle.replace(/\w\S*/g, (w) =>
     w.replace(/^\w/, (c) => c.toUpperCase())
   );
 
   const articleListPage = (
     <>
-      <Main cn="mt-14">
-        <section className="articles">
-          <div className="mb-5 flex flex-col md:flex-row md:items-center justify-between">
-            <div className="flex-1 mb-3 md:mb-0">
-              <h3 className="text-secondary-100">
+      <Main cn='mt-14'>
+        <section className='articles'>
+          <div className='mb-5 flex flex-col md:flex-row md:items-center justify-between'>
+            <div className='flex-1 mb-3 md:mb-0'>
+              <h3 className='text-secondary-100'>
                 Artikel berdasarkan tagar:{' '}
-                <span className="uppercase font-bold">{resultArticle}</span>
+                <span className='uppercase font-bold'>{resultArticle}</span>
               </h3>
-              <div className="bg-gray-300 h-1 w-1/4"></div>
+              <div className='bg-gray-300 h-1 w-1/4'></div>
             </div>
             <Search />
           </div>
-          {articles.length === 0 && (
-            <h4>Tidak ada artikel untuk ditampilkan</h4>
-          )}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {articles.length === 0 && <h4>Tidak ada artikel untuk ditampilkan</h4>}
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4'>
             {articles.map((article) => (
               <ArticleItem key={article.id} article={article} />
             ))}
@@ -60,17 +58,14 @@ export default function TagPage({ articles, errorCode }) {
 
   return (
     <>
-      <Seo
-        title={`KJR Cianjur | Tagar ${capitalizeArticle}`}
-        keyword={`${capitalizeArticle}`}
-      />
+      <Seo title={`KJR Cianjur | Tagar ${capitalizeArticle}`} keyword={`${resultArticle}`} />
       {loading ? <ArticleSkeleton /> : articleListPage}
     </>
   );
 }
 
 export async function getServerSideProps({ query: { tag } }) {
-  const term = tag.replace('-', ' ');
+  const term = tag.split('-').join(' ');
   const query = qs.stringify({
     _where: {
       _or: [{ tags_contains: term }],
