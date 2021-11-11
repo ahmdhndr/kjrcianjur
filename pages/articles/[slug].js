@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Script from 'next/script';
 import { useState, useEffect } from 'react';
 import { FaWhatsapp, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
 import {
@@ -41,57 +42,51 @@ export default function ArticlePage({ article, errorCode }) {
   }, []);
 
   const articleDetailPage = (
-    <Main cn="mt-14 xl:pl-0 mb-5">
-      <div className="text-secondary-200">
-        <div className="card rounded-sm overflow-hidden">
-          <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-extrabold capitalize md:col-span-3">
-              {article.title}
-            </h1>
+    <Main cn='mt-14 xl:pl-0 mb-5'>
+      <div className='text-secondary-200'>
+        <div className='card rounded-sm overflow-hidden'>
+          <div className='flex items-center justify-between'>
+            <h1 className='text-4xl font-extrabold capitalize md:col-span-3'>{article.title}</h1>
           </div>
-          <div className="sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2">
-            <div className="flex">
+          <div className='sm:grid md:flex justify-between text-sm text-gray-500 items-center my-2'>
+            <div className='flex'>
               {article.user ? (
                 <p>
-                  <span className="capitalize font-bold">
-                    {article.user.fullname}
-                  </span>
+                  <span className='capitalize font-bold'>{article.user.fullname}</span>
                 </p>
               ) : (
                 <p>
-                  <span className="font-bold">Admin</span>
+                  <span className='font-bold'>Admin</span>
                 </p>
               )}
-              <span className="mx-1">-</span>
+              <span className='mx-1'>-</span>
               <p>{moment(article.published_at).locale('id').format('llll')}</p>
             </div>
           </div>
           {/* Hero Section */}
           <Hero
             imgSrc={`${
-              article.image
-                ? article.image.formats.large.url
-                : '/images/cover_default.jpg'
+              article.image ? article.image.formats.large.url : '/images/cover_default.jpg'
             }`}
-            heroTitle=""
-            heroSubTitle=""
-            addCn="mt-3 mb-2"
+            heroTitle=''
+            heroSubTitle=''
+            addCn='mt-3 mb-5'
           />
           {/* Description Section */}
           <section
-            className="article-content mx-auto prose"
+            className='article-content prose max-w-none'
             dangerouslySetInnerHTML={{ __html: marked(article.content) }}
           ></section>
 
           {/* Tag Artikel */}
           {splitTags.length > 0 && (
-            <div className="my-3">
-              <h4 className="mb-1">Tagar: </h4>
-              <div className="flex items-center">
+            <div className='my-3'>
+              <h4 className='mb-1'>Tagar: </h4>
+              <div className='flex items-center'>
                 {splitTags.map((tag, index) => (
                   <div key={index}>
                     <Link href={`/articles/tag/${slugify(tag)}`}>
-                      <a className="bg-primary-200 hover:bg-primary-100 text-white px-2 py-1 rounded-sm inline-block mr-2 text-sm">
+                      <a className='bg-primary-200 hover:bg-primary-100 text-white px-2 py-1 rounded-sm inline-block mr-2 text-sm'>
                         {tag}
                       </a>
                     </Link>
@@ -102,27 +97,27 @@ export default function ArticlePage({ article, errorCode }) {
           )}
 
           {/* Share Artikel */}
-          <div className="share-article mt-5">
+          <div className='share-article mt-5'>
             <h4>Bagikan artikel ini</h4>
-            <div className="flex items-center">
-              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+            <div className='flex items-center'>
+              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
                 <WhatsappShareButton url={shareUrl} quote={title}>
-                  <FaWhatsapp className="text-white text-2xl" />
+                  <FaWhatsapp className='text-white text-2xl' />
                 </WhatsappShareButton>
               </div>
-              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
                 <FacebookShareButton url={shareUrl} quote={title}>
-                  <FaFacebook className="text-white text-2xl" />
+                  <FaFacebook className='text-white text-2xl' />
                 </FacebookShareButton>
               </div>
-              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
                 <TwitterShareButton url={shareUrl} quote={title}>
-                  <FaTwitter className="text-white text-2xl" />
+                  <FaTwitter className='text-white text-2xl' />
                 </TwitterShareButton>
               </div>
-              <div className="cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border">
+              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
                 <TelegramShareButton url={shareUrl} quote={title}>
-                  <FaTelegram className="text-white text-2xl" />
+                  <FaTelegram className='text-white text-2xl' />
                 </TelegramShareButton>
               </div>
             </div>
@@ -134,10 +129,7 @@ export default function ArticlePage({ article, errorCode }) {
 
   return (
     <>
-      <Seo
-        title={`KJR Cianjur | ${article.title}`}
-        description={`${article.description}`}
-      />
+      <Seo title={`KJR Cianjur | ${article.title}`} description={`${article.description}`} />
       {loading ? <ArticleDetailSkeleton /> : articleDetailPage}
     </>
   );
