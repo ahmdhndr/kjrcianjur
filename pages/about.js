@@ -14,7 +14,7 @@ export default function AboutPage() {
   const aboutPage = (
     <>
       <Hero
-        imgSrc="https://res.cloudinary.com/kjr-cianjur/image/upload/v1636196332/large_foto_8_41a419bc5c.jpg"
+        imgSrc="/images/bg_about.jpg"
         imgAlt="Gambar: Gabungan Anggota KJR"
         heroTitle="Tentang Kami"
         heroSubTitle=""

@@ -41,7 +41,9 @@ export default function EditArticlePage({ article, token, errorCode }) {
     tags: article.tags,
   });
   const [imagePreview, setImagePreview] = useState(
-    article.image ? article.image.formats.large.url : null
+    article.image
+      ? article.image.formats.large.url
+      : '/images/cover_default.jpg'
   );
   const [showModal, setShowModal] = useState(false);
 

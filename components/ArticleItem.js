@@ -23,7 +23,7 @@ export default function ArticleItem({ article }) {
                   src={
                     article.image
                       ? article.image.formats.small.url
-                      : '/images/default.jpg'
+                      : '/images/cover_default.jpg'
                   }
                   alt={article.title}
                   className="relative w-full h-full object-cover object-center transform scale-100 hover:scale-110 transition duration-100 ease-linear bg-gray-600"

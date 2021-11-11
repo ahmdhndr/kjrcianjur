@@ -71,7 +71,7 @@ export default function ArticlePage({ article, errorCode }) {
             imgSrc={`${
               article.image
                 ? article.image.formats.large.url
-                : 'https://res.cloudinary.com/kjr-cianjur/image/upload/v1636256756/large_default_44a80e1393.jpg'
+                : '/images/cover_default.jpg'
             }`}
             heroTitle=""
             heroSubTitle=""

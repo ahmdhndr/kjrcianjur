@@ -15,7 +15,7 @@ export default function Home({ articles }) {
   const homePage = (
     <>
       <Hero
-        imgSrc="https://res.cloudinary.com/kjr-cianjur/image/upload/v1636196331/large_bg_image_9d63f78d20.jpg"
+        imgSrc="/images/bg_home.jpg"
         imgAlt="Gambar: Anggota KJR Cianjur"
         heroTitle="We Are The Future"
         heroSubTitle="Selamat datang di website KJR Cianjur"

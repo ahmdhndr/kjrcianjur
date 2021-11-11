@@ -17,9 +17,7 @@ import { FaImage } from 'react-icons/fa';
 export default function AddArticlePage({ token }) {
   const router = useRouter();
   const { user } = useContext(AuthContext);
-  const [imagePreview, setImagePreview] = useState(
-    'https://res.cloudinary.com/kjr-cianjur/image/upload/v1636256756/large_default_44a80e1393.jpg'
-  );
+  const [imagePreview, setImagePreview] = useState('/images/cover_default.jpg');
   const [image, setImage] = useState(null);
 
   if (!user) {
