@@ -44,7 +44,7 @@ export default function ArticleItem({ article }) {
               {splitTags.map((tag, index) => (
                 <div key={index}>
                   <Link href={`/articles/tag/${slugify(tag)}`}>
-                    <a className='bg-gray-400 hover:bg-gray-500 text-white px-2 py-1 rounded-sm block text-sm'>
+                    <a className='bg-gray-400 hover:bg-gray-500 text-white px-2 py-1 rounded-sm block text-sm capitalize'>
                       {tag}
                     </a>
                   </Link>

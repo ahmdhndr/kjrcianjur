@@ -77,7 +77,7 @@ export async function getServerSideProps({ query: { tag } }) {
 
   return {
     props: {
-      articles: data,
+      articles: data.sort((a, b) => b.id - a.id),
       errorCode,
     },
   };
