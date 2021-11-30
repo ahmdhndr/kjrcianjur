@@ -66,7 +66,7 @@ export default function LoginPage({ members, username: resUser, email: resEmail 
         toast.error('Anda belum terdaftar sebagai anggota KJR Cianjur.');
         return setLoading(false);
       }
-    }, 300);
+    }, 1000);
     return () => clearTimeout(timer);
   };
 
@@ -90,7 +90,7 @@ export default function LoginPage({ members, username: resUser, email: resEmail 
           </h2>
           <ToastContainer
             position='top-center'
-            autoClose={300}
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

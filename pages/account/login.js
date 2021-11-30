@@ -28,7 +28,7 @@ export default function LoginPage() {
     const timer = setTimeout(() => {
       setLoading(false);
       login({ identifier: email || username, password });
-    }, 300);
+    }, 1000);
     return () => clearTimeout(timer);
   };
 
@@ -52,7 +52,7 @@ export default function LoginPage() {
           </h2>
           <ToastContainer
             position='top-center'
-            autoClose={300}
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             pauseOnFocusLoss={false}

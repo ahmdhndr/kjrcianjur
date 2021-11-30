@@ -92,7 +92,7 @@ export default function ArticlePage({ article, errorCode }) {
           {/* Hero Section */}
           <Hero
             imgSrc={`${
-              article.image ? article.image.formats.medium.url : '/images/cover_default.jpg'
+              article.image ? article.image.formats.large.url : '/images/cover_default.jpg'
             }`}
             heroTitle=''
             heroSubTitle=''
@@ -100,7 +100,7 @@ export default function ArticlePage({ article, errorCode }) {
           />
           {/* Description Section */}
           <section
-            className='article-content prose m-auto'
+            className='article-content prose mx-auto'
             dangerouslySetInnerHTML={{ __html: marked(article.content) }}
           ></section>
 

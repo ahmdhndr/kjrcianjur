@@ -1,6 +1,8 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaImage } from 'react-icons/fa';
+import ScaleLoader from 'react-spinners/ScaleLoader';
+import { css } from '@emotion/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,6 +23,7 @@ import Error from 'pages/_error';
 export default function EditArticlePage({ article, token, errorCode }) {
   const router = useRouter();
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   if (errorCode) {
     return <Error statusCode={errorCode} />;
@@ -30,9 +33,11 @@ export default function EditArticlePage({ article, token, errorCode }) {
     return null;
   }
 
-  if (user.id !== article.user.id) {
-    return router.push('/');
-  }
+  useEffect(() => {
+    if (user.id !== article.user.id) {
+      router.push('/');
+    }
+  }, [user]);
 
   const [values, setValues] = useState({
     title: article.title,
@@ -48,6 +53,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
   const handleSubmit = async (e) => {
     let valid = true;
     e.preventDefault();
+    setLoading(true);
 
     const hasEmptyFields = Object.values(values).some((elem) => elem === '');
     if (hasEmptyFields) {
@@ -78,6 +84,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
         router.push(`/articles/${article.slug}`);
       }
     }
+    setLoading(false);
   };
 
   const handleInputChange = (e) => {
@@ -91,6 +98,12 @@ export default function EditArticlePage({ article, token, errorCode }) {
     setImagePreview(data.image.formats.large.url);
     setShowModal(false);
   };
+
+  const override = css`
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  `;
 
   return (
     <>
@@ -206,12 +219,27 @@ export default function EditArticlePage({ article, token, errorCode }) {
               </div>
               <Gap height={10} />
               <div>
-                <button
-                  type='submit'
-                  className='block p-2 w-full md:w-auto bg-primary-200 rounded text-white'
-                >
-                  Update Artikel
-                </button>
+                {loading ? (
+                  <div className='p-2 rounded-md w-full bg-gray-400 text-white cursor-not-allowed'>
+                    <ScaleLoader
+                      height={20}
+                      width={4}
+                      radius={2}
+                      margin={2}
+                      color={'#e5e7eb'}
+                      css={override}
+                      loading={loading}
+                      speedMultiplier={1.1}
+                    />
+                  </div>
+                ) : (
+                  <button
+                    type='submit'
+                    className='p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 text-white cursor-pointer'
+                  >
+                    Update Artikel
+                  </button>
+                )}
               </div>
             </div>
           </div>
