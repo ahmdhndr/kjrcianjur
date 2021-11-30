@@ -32,8 +32,10 @@ export default function ArticleItem({ article }) {
         </div>
         <div className='article-details mt-auto grid w-full overflow-hidden justify-self-center'>
           <Link href={`/articles/${article.slug}`}>
-            <a className='w-max uppercase font-extrabold text-secondary-200 text-xl'>
-              <h2 className='focus:text-primary-200 hover:text-primary-200'>{article.title}</h2>
+            <a>
+              <h2 className='uppercase font-extrabold text-secondary-200 text-xl sm:h-16 focus:text-primary-200 hover:text-primary-200'>
+                {article.title}
+              </h2>
             </a>
           </Link>
           <div className='text-gray-500 font-light my-4 h-14 overflow-y-auto custom-scroll'>

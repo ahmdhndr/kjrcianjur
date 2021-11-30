@@ -78,17 +78,17 @@ body {
   bottom: 40px;
   cursor: pointer;
   padding: 2px;
-  opacity: 0.5;
-  transition: opacity 0.4s;
+  opacity: 1;
+  transition: background-color 0.4s;
   animation: fadeInScroll 0.3s;
   width: 40px;
   height: 40px;
-  background: #00509b;
+  background-color: #00509b;
   border-radius: 50%;
 }
 
 .scrollTop:hover {
-  opacity: 1;
+  background-color: #003363;
 }
 
 .nav-menu {
@@ -154,14 +154,22 @@ body {
   padding: 0;
 }
 
-.article-content .video-container {
+.article-content img {
+  max-width: 560px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center center;
+  margin: 0 auto;
+}
+
+.article-content .video-container-yt {
   position: relative;
   width: 100%;
   padding-bottom: 56.25%;
   margin: 0 auto;
 }
 
-.article-content .video-container .video {
+.article-content .video-container-yt .video {
   position: absolute;
   top: 0;
   left: 0;
@@ -311,6 +319,16 @@ body {
     margin: 0 auto;
     padding-bottom: 0;
   }
+
+  .article-content .video-container-yt {
+    position: relative;
+    max-width: 560px;
+    max-height: 315px;
+    width: 100%;
+    height: 315px;
+    margin: 0 auto;
+    padding-bottom: 0;
+  }
 }
 
 @keyframes fadeInScroll {
@@ -318,7 +336,7 @@ body {
     opacity: 0;
   }
   to {
-    opacity: 0.5;
+    opacity: 1;
   }
 }
 

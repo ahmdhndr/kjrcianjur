@@ -42,7 +42,7 @@ export default function ArticlePage({ article, errorCode }) {
   }, []);
 
   const articleDetailPage = (
-    <Main cn='mt-14 xl:pl-0 mb-5'>
+    <Main cn='mt-14 xl:pl-0'>
       <div className='text-secondary-200'>
         <div className='card rounded-sm overflow-hidden'>
           <div className='flex items-center justify-between'>
@@ -100,13 +100,13 @@ export default function ArticlePage({ article, errorCode }) {
           />
           {/* Description Section */}
           <section
-            className='article-content prose max-w-none'
+            className='article-content prose m-auto'
             dangerouslySetInnerHTML={{ __html: marked(article.content) }}
           ></section>
 
           {/* Tag Artikel */}
           {splitTags.length > 0 && (
-            <div className='my-3'>
+            <div>
               <h4 className='mb-1'>Tagar: </h4>
               <div className='flex flex-wrap gap-2 items-center w-full md:w-1/2'>
                 {splitTags.map((tag, index) => (

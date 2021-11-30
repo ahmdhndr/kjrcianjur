@@ -198,7 +198,7 @@ export default function EditArticlePage({ article, token, errorCode }) {
                   name='content'
                   id='content'
                   rows='5'
-                  className='resize-none border rounded-md focus:border-primary-200 w-full p-2 outline-none focus:ring-1 focus:ring-primary-200'
+                  className='border rounded-md focus:border-primary-200 w-full p-2 outline-none focus:ring-1 focus:ring-primary-200'
                   placeholder='Silakan tulis disini...'
                   value={values.content}
                   onChange={handleInputChange}
