@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import Script from 'next/script';
 import { useState, useEffect } from 'react';
-import { FaWhatsapp, FaFacebook, FaTwitter, FaTelegram } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebookF, FaTwitter, FaTelegramPlane } from 'react-icons/fa';
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -64,6 +63,32 @@ export default function ArticlePage({ article, errorCode }) {
               <p>{moment(article.published_at).locale('id').format('llll')}</p>
             </div>
           </div>
+          {/* Share Artikel */}
+          <div className='share-article'>
+            {/* <h4>Bagikan artikel ini</h4> */}
+            <div className='grid grid-flow-col gap-1 justify-start'>
+              <div className='cursor-pointer hover:bg-green-600 duration-300 share-icon bg-green-500 flex items-center p-2 rounded-full'>
+                <WhatsappShareButton url={shareUrl} quote={title}>
+                  <FaWhatsapp className='text-white text-xl' />
+                </WhatsappShareButton>
+              </div>
+              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 rounded-full'>
+                <FacebookShareButton url={shareUrl} quote={title}>
+                  <FaFacebookF className='text-white text-xl' />
+                </FacebookShareButton>
+              </div>
+              <div className='cursor-pointer hover:bg-blue-600 duration-300 share-icon bg-blue-500 flex items-center p-2 rounded-full overflow-hidden'>
+                <TwitterShareButton url={shareUrl} quote={title}>
+                  <FaTwitter className='text-white text-xl' />
+                </TwitterShareButton>
+              </div>
+              <div className='cursor-pointer hover:bg-blue-700 duration-300 share-icon bg-blue-600 flex items-center p-2 rounded-full overflow-hidden'>
+                <TelegramShareButton url={shareUrl} quote={title}>
+                  <FaTelegramPlane className='text-white text-xl' />
+                </TelegramShareButton>
+              </div>
+            </div>
+          </div>
           {/* Hero Section */}
           <Hero
             imgSrc={`${
@@ -96,33 +121,6 @@ export default function ArticlePage({ article, errorCode }) {
               </div>
             </div>
           )}
-
-          {/* Share Artikel */}
-          <div className='share-article mt-5'>
-            <h4>Bagikan artikel ini</h4>
-            <div className='flex items-center'>
-              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
-                <WhatsappShareButton url={shareUrl} quote={title}>
-                  <FaWhatsapp className='text-white text-2xl' />
-                </WhatsappShareButton>
-              </div>
-              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
-                <FacebookShareButton url={shareUrl} quote={title}>
-                  <FaFacebook className='text-white text-2xl' />
-                </FacebookShareButton>
-              </div>
-              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
-                <TwitterShareButton url={shareUrl} quote={title}>
-                  <FaTwitter className='text-white text-2xl' />
-                </TwitterShareButton>
-              </div>
-              <div className='cursor-pointer hover:bg-primary-200 duration-300 share-icon bg-primary-100 flex items-center p-2 border'>
-                <TelegramShareButton url={shareUrl} quote={title}>
-                  <FaTelegram className='text-white text-2xl' />
-                </TelegramShareButton>
-              </div>
-            </div>
-          </div>
           <ScrollToTopButton />
         </div>
       </div>
