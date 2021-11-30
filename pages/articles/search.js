@@ -50,7 +50,7 @@ export default function SearchPage({ articles, errorCode }) {
     const timer = setTimeout(() => {
       searchPage;
       setLoading(false);
-    }, 1500);
+    }, 300);
     return () => clearTimeout(timer);
   }, []);
 

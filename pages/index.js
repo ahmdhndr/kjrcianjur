@@ -15,30 +15,28 @@ export default function Home({ articles }) {
   const homePage = (
     <>
       <Hero
-        imgSrc="/images/bg_home.jpg"
-        imgAlt="Gambar: Anggota KJR Cianjur"
-        heroTitle="We Are The Future"
-        heroSubTitle="Selamat datang di website KJR Cianjur"
+        imgSrc='/images/bg_home.jpg'
+        imgAlt='Gambar: Anggota KJR Cianjur'
+        heroTitle='We Are The Future'
+        heroSubTitle='Selamat datang di website KJR Cianjur'
       />
       <Main>
-        <section className="articles">
-          <div className="my-5 flex justify-between items-center">
-            <div className="flex-1">
-              <h3 className="font-bold text-secondary-100">Artikel Terbaru</h3>
-              <div className="bg-gray-300 h-1 w-1/3"></div>
+        <section className='articles'>
+          <div className='my-5 flex justify-between items-center'>
+            <div className='flex-1'>
+              <h3 className='font-bold text-secondary-100'>Artikel Terbaru</h3>
+              <div className='bg-gray-300 h-1 w-1/3'></div>
             </div>
           </div>
-          {articles.length === 0 && (
-            <h4>Tidak ada artikel untuk ditampilkan</h4>
-          )}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {articles.length === 0 && <h4>Tidak ada artikel untuk ditampilkan</h4>}
+          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4'>
             {articles.map((article) => (
               <ArticleItem key={article.id} article={article} />
             ))}
           </div>
         </section>
-        <Link href="/articles">
-          <a className="mt-5 btn btn-md inline-block btn-primary text-white hover:bg-primary-200 transition duration-100 ease-in">
+        <Link href='/articles'>
+          <a className='mt-5 btn btn-md inline-block btn-primary text-white hover:bg-primary-200 transition duration-100 ease-in'>
             <button>Semua Artikel</button>
           </a>
         </Link>
@@ -51,13 +49,13 @@ export default function Home({ articles }) {
     const timer = setTimeout(() => {
       homePage;
       setLoading(false);
-    }, 1500);
+    }, 300);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      <Seo title="KJR Cianjur | Beranda" />
+      <Seo title='KJR Cianjur | Beranda' />
       {loading ? <HomeSkeleton /> : homePage}
     </>
   );

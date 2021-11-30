@@ -52,7 +52,7 @@ export default function TagPage({ articles, errorCode }) {
     const timer = setTimeout(() => {
       articleListPage;
       setLoading(false);
-    }, 1500);
+    }, 300);
     return () => clearTimeout(timer);
   }, []);
 

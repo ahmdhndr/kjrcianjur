@@ -15,6 +15,7 @@ import 'moment/locale/id';
 import Hero from '@/components/Hero';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { API_URL, BASE_URL } from '@/config/index';
 import Error from 'pages/_error';
 import ArticleDetailSkeleton from '@/components/Skeleton/ArticleDetailSkeleton';
@@ -37,7 +38,7 @@ export default function ArticlePage({ article, errorCode }) {
     const timer = setTimeout(() => {
       articleDetailPage;
       setLoading(false);
-    }, 1500);
+    }, 300);
     return () => clearTimeout(timer);
   }, []);
 
@@ -66,7 +67,7 @@ export default function ArticlePage({ article, errorCode }) {
           {/* Hero Section */}
           <Hero
             imgSrc={`${
-              article.image ? article.image.formats.large.url : '/images/cover_default.jpg'
+              article.image ? article.image.formats.medium.url : '/images/cover_default.jpg'
             }`}
             heroTitle=''
             heroSubTitle=''
@@ -122,6 +123,7 @@ export default function ArticlePage({ article, errorCode }) {
               </div>
             </div>
           </div>
+          <ScrollToTopButton />
         </div>
       </div>
     </Main>

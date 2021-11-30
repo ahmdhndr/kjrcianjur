@@ -14,11 +14,7 @@ import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
 import { API_URL } from '@/config/index';
 
-export default function LoginPage({
-  members,
-  username: resUser,
-  email: resEmail,
-}) {
+export default function LoginPage({ members, username: resUser, email: resEmail }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [fullname, setFullname] = useState('');
@@ -70,7 +66,7 @@ export default function LoginPage({
         toast.error('Anda belum terdaftar sebagai anggota KJR Cianjur.');
         return setLoading(false);
       }
-    }, 1500);
+    }, 300);
     return () => clearTimeout(timer);
   };
 
@@ -86,15 +82,15 @@ export default function LoginPage({
 
   return (
     <>
-      <Seo title="KJR Cianjur | Register User" />
-      <Main cn="mt-14">
-        <div className="mx-auto max-w-xl bg-white rounded-md p-3 relative">
-          <h2 className="flex items-center font-bold mb-3">
-            <FaUser className="mr-2" /> Daftar User
+      <Seo title='KJR Cianjur | Register User' />
+      <Main cn='mt-14'>
+        <div className='mx-auto max-w-xl bg-white rounded-md p-3 relative'>
+          <h2 className='flex items-center font-bold mb-3'>
+            <FaUser className='mr-2' /> Daftar User
           </h2>
           <ToastContainer
-            position="top-center"
-            autoClose={2000}
+            position='top-center'
+            autoClose={300}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -104,68 +100,68 @@ export default function LoginPage({
           />
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username">Username</label>
+              <label htmlFor='username'>Username</label>
               <Gap height={5} />
               <input
                 autoFocus
-                type="text"
-                id="username"
+                type='text'
+                id='username'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                className='focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent'
               />
             </div>
             <Gap height={10} />
             <div>
-              <label htmlFor="email">Email</label>
+              <label htmlFor='email'>Email</label>
               <Gap height={5} />
               <input
-                type="email"
-                id="email"
+                type='email'
+                id='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                className='focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent'
               />
             </div>
             <Gap height={10} />
             <div>
-              <label htmlFor="fullname">Nama Lengkap</label>
+              <label htmlFor='fullname'>Nama Lengkap</label>
               <Gap height={5} />
               <input
-                type="text"
-                id="fullname"
+                type='text'
+                id='fullname'
                 value={fullname}
                 onChange={(e) => setFullname(e.target.value)}
-                className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                className='focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent'
               />
             </div>
             <Gap height={10} />
             <div>
-              <label htmlFor="password">Password</label>
+              <label htmlFor='password'>Password</label>
               <Gap height={5} />
               <input
                 type={showPassword ? 'text' : 'password'}
-                id="password"
+                id='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                className='focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent'
               />
             </div>
             <Gap height={10} />
             <div>
-              <label htmlFor="passwordConfirm">Konfirmasi Password</label>
+              <label htmlFor='passwordConfirm'>Konfirmasi Password</label>
               <Gap height={5} />
               <input
                 type={showPassword ? 'text' : 'password'}
-                id="passwordConfirm"
+                id='passwordConfirm'
                 value={passwordConfirm}
                 onChange={(e) => setPasswordConfirm(e.target.value)}
-                className="focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent"
+                className='focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent'
               />
             </div>
             <Gap height={10} />
             {loading ? (
-              <div className="p-2 rounded-md w-full bg-gray-400 text-white cursor-not-allowed">
+              <div className='p-2 rounded-md w-full bg-gray-400 text-white cursor-not-allowed'>
                 <ScaleLoader
                   height={20}
                   width={4}
@@ -179,26 +175,22 @@ export default function LoginPage({
               </div>
             ) : (
               <button
-                type="submit"
-                className="p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 text-white cursor-pointer"
+                type='submit'
+                className='p-2 rounded-md w-full bg-primary-200 hover:bg-primary-100 text-white cursor-pointer'
               >
                 Register
               </button>
             )}
           </form>
           <button
-            className="absolute right-3 bottom-48 -mb-6 text-primary-200 p-3"
+            className='absolute right-3 bottom-48 -mb-6 text-primary-200 p-3'
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? (
-              <FaEyeSlash className="text-xl" />
-            ) : (
-              <FaEye className="text-xl" />
-            )}
+            {showPassword ? <FaEyeSlash className='text-xl' /> : <FaEye className='text-xl' />}
           </button>
           <Gap height={10} />
           <p>
-            Sudah punya akun? <Link href="/account/login">Login</Link>
+            Sudah punya akun? <Link href='/account/login'>Login</Link>
           </p>
         </div>
       </Main>
