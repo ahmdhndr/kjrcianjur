@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Login user
-  const login = async ({ identifier, password }) => {
+  const login = async ({ username: identifier, password }) => {
     const res = await fetch(`${BASE_URL}/api/login`, {
       method: 'POST',
       headers: {
@@ -90,9 +90,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, error, register, login, logout, isLoggedIn }}
-    >
+    <AuthContext.Provider value={{ user, error, register, login, logout, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

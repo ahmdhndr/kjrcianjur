@@ -34,9 +34,7 @@ export default async (req, res) => {
 
       res.status(200).json({ user: data.user });
     } else {
-      res
-        .status(data.statusCode)
-        .json({ message: data.message[0].messages[0].message });
+      res.status(data.statusCode).json({ message: data.message[0].messages[0].message });
     }
   } else {
     res.setHeader('Allow', ['POST']);

@@ -131,8 +131,12 @@ export default function ArticlePage({ article, errorCode }) {
     <>
       <Seo
         title={`KJR Cianjur | ${article.title}`}
-        description={`${article.description}`}
+        description={article.description}
         keyword={splitTags}
+        ogTitle={`KJR Cianjur | ${article.title}`}
+        ogDescription={article.description}
+        ogImage={article.image ? article.image.formats.medium.url : '/images/cover_default.jpg'}
+        ogImageAlt={`Foto ${article.description}`}
       />
       {loading ? <ArticleDetailSkeleton /> : articleDetailPage}
     </>

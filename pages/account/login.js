@@ -12,9 +12,9 @@ import AuthContext from '@/context/AuthContext';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
+import { API_URL } from '@/config/index';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
+export default function LoginPage({ users }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,19 +22,32 @@ export default function LoginPage() {
 
   const { login, error } = useContext(AuthContext);
 
+  useEffect(() => error && toast.error(error));
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const userRes = users.map((user) => user.username);
+    const isValidUser = userRes.some((userInput) => userInput === username);
+
     const timer = setTimeout(() => {
       setLoading(false);
-      login({ identifier: email || username, password });
+      if (!username || !password) {
+        toast.error('Mohon untuk mengisi semua form!');
+        return setLoading(false);
+      }
+
+      if (!isValidUser) {
+        toast.error('Kredensial yang Anda masukkan salah');
+        return setLoading(false);
+      } else if (isValidUser) {
+        login({ username, password });
+        setLoading(false);
+      }
     }, 1000);
     return () => clearTimeout(timer);
   };
-
-  useEffect(() => {
-    error && toast.error(error);
-  });
 
   const override = css`
     display: flex;
@@ -63,14 +76,14 @@ export default function LoginPage() {
           />
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor='identifier'>Username / Email</label>
+              <label htmlFor='identifier'>Username</label>
               <Gap height={5} />
               <input
                 autoFocus
                 type='text'
                 id='identifier'
-                value={email || username}
-                onChange={(e) => setEmail(e.target.value) || setUsername(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className='focus:outline-none focus:border-primary-100 border-2 rounded-md py-1 px-2 w-full focus:placeholder-transparent'
               />
             </div>
@@ -123,4 +136,13 @@ export default function LoginPage() {
       </Main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch(`${API_URL}/users`);
+  const users = await res.json();
+  return {
+    props: { users },
+    revalidate: 1,
+  };
 }
