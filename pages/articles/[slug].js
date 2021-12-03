@@ -135,7 +135,7 @@ export default function ArticlePage({ article, errorCode }) {
         keyword={splitTags}
         ogTitle={`KJR Cianjur | ${article.title}`}
         ogDescription={article.description}
-        ogImage={article.image ? article.image.formats.medium.url : '/images/cover_default.jpg'}
+        ogImage={article.image ? article.image.formats.large.url : '/images/cover_default.jpg'}
         ogImageAlt={`Foto ${article.description}`}
       />
       {loading ? <ArticleDetailSkeleton /> : articleDetailPage}

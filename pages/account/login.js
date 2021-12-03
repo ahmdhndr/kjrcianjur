@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import { css } from '@emotion/react';
@@ -12,9 +12,9 @@ import AuthContext from '@/context/AuthContext';
 import Main from '@/components/Main';
 import Seo from '@/components/Seo';
 import Gap from '@/components/Gap';
-import { API_URL } from '@/config/index';
 
-export default function LoginPage({ users }) {
+export default function LoginPage() {
+  const isInitialMount = useRef();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,31 +22,15 @@ export default function LoginPage({ users }) {
 
   const { login, error } = useContext(AuthContext);
 
-  useEffect(() => error && toast.error(error));
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const userRes = users.map((user) => user.username);
-    const isValidUser = userRes.some((userInput) => userInput === username);
-
-    const timer = setTimeout(() => {
-      setLoading(false);
-      if (!username || !password) {
-        toast.error('Mohon untuk mengisi semua form!');
-        return setLoading(false);
-      }
-
-      if (!isValidUser) {
-        toast.error('Kredensial yang Anda masukkan salah');
-        return setLoading(false);
-      } else if (isValidUser) {
-        login({ username, password });
-        setLoading(false);
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
+    if (!username || !password) {
+      toast.error('Mohon untuk mengisi semua form!');
+      return setLoading(false);
+    }
+    login({ username, password });
+    return setLoading(false);
   };
 
   const override = css`
@@ -54,6 +38,10 @@ export default function LoginPage({ users }) {
     align-self: center;
     justify-content: center;
   `;
+
+  useEffect(() => {
+    error && toast.error(error);
+  });
 
   return (
     <>
@@ -136,13 +124,4 @@ export default function LoginPage({ users }) {
       </Main>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/users`);
-  const users = await res.json();
-  return {
-    props: { users },
-    revalidate: 1,
-  };
 }
